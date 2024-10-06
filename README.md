@@ -49,7 +49,7 @@ docker-compose down
 ## ページ紹介
 
 - ユーザー画面: [localhost:8000](http://localhost:8000)
-- 管理者画面: [localhost:8000/admin/login](http://localhost:8000/admin/login)
+- 管理者画面: [localhost:8000/admin/login](http://localhost:8000/login)
 
 ### ログイン情報
 
