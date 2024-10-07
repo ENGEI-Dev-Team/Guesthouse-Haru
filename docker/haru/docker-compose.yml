@@ -6,7 +6,7 @@ services:
     container_name: db_test
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: db_mysql_test # データベース名
+      MYSQL_DATABASE: guesthouse_haru
       MYSQL_ROOT_PASSWORD: password
       MYSQL_USER: admin # ユーザー名（任意）
       MYSQL_PASSWORD: password # ユーザーのパスワード（任意）

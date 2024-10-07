@@ -16,7 +16,8 @@ RUN apt update \
             opcache \
             pdo \
             pdo_pgsql \
-            pgsql
+            pgsql \
+            pdo_mysql
 
 WORKDIR /var/www/haru/src
 
