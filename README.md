@@ -20,7 +20,7 @@ docker-compose up -d
 
 ```bash
 //コンテナの中に入る
-docker-compose exec app bash
+docker-compose exec php-apache bash
 
 //ディレクトリ移動
 cd /var/www/haru/src
