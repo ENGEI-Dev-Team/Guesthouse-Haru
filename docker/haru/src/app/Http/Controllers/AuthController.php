@@ -60,7 +60,7 @@ class AuthController extends Controller
 
         $loginData = $request->only('email', 'password');
 
-        if (Auth('admin')->attempt($loginData)) {
+        if (Auth::guard('admin')->attempt($loginData)) {
             return redirect()->intended('/admin/dashboard');
         }
         return back()->withErrors([

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminBlogController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +33,18 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 });
 
-Route::get('/', function () {
-    return view('top');
+// 管理者ブログ作成
+Route::middleware('admin')->group(function () {
+    Route::get('admin/blog/create', [AdminBlogController::class, 'create'])->name('admin.blog.create');
+    Route::post('/blogs', [AdminBlogController::class, 'store'])->name('admin.blog.store');
 });
+
+// 管理者ブログ一覧
+Route::middleware('admin')->group(function () {
+    Route::get('admin/blogs', [AdminBlogController::class, 'blogLists'])->name('admin.blogLists');
+});
+
+Route::middleware('admin')->group(function () {
+    Route::get('/', function () {
+        return view('top');
+    });
