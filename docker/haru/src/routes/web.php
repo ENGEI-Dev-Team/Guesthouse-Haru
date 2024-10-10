@@ -44,7 +44,13 @@ Route::middleware('admin')->group(function () {
     Route::get('admin/blogs', [AdminBlogController::class, 'blogLists'])->name('admin.blogLists');
 });
 
+// ブログ詳細ページ
+Route::middleware('admin')->group(function () {
+    Route::get('admin/blogs/{id}', [AdminBlogController::class, 'blogDetail'])->name('admin.blogDetail');
+});
+
 Route::middleware('admin')->group(function () {
     Route::get('/', function () {
         return view('top');
     });
+});
