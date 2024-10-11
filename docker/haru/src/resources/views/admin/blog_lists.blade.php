@@ -39,20 +39,25 @@
 
 <section class="blog-lists">
   <div class="inner">
+    @if (session('success'))
+    <div class="alert alert-success">
+      {{ session('success') }}
+    </div>
+    @endif
     <div class="blog-container">
       @foreach ($blogs as $blog)
-        <a href="{{ route('admin.blogDetail', ['id' => $blog->id]) }}" class="blog-item">
-          @if ($blog->image)
-          <div class="blog-image">
-            <img src="{{ asset('storage/' . $blog->image) }}" alt="{{ $blog->title }}">
-          </div>
-          @endif
-          <div class="blog-content-container">
-            <h3 class="blog-title">{{ $blog->title }}</h3>
-            <p class="blog-content">{{ Str::limit($blog->content, 150, '...') }}</p>
-            <p class="blog-date">{{ $blog->created_at->format('F j, Y') }}</p>
-          </div>
-        </a>
+      <a href="{{ route('admin.blogDetail', ['id' => $blog->id]) }}" class="blog-item">
+        @if ($blog->image)
+        <div class="blog-image">
+          <img src="{{ asset('storage/' . $blog->image) }}" alt="{{ $blog->title }}">
+        </div>
+        @endif
+        <div class="blog-content-container">
+          <h3 class="blog-title">{{ $blog->title }}</h3>
+          <p class="blog-content">{{ Str::limit($blog->content, 150, '...') }}</p>
+          <p class="blog-date">{{ $blog->created_at->format('F j, Y') }}</p>
+        </div>
+      </a>
       @endforeach
     </div>
   </div>

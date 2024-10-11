@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminBlogController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -28,29 +29,23 @@ Route::post('/login', [AuthController::class, 'login'])->name('admin.login.submi
 // 管理者ログアウト
 Route::post('/admin/logout', [AuthController::class, 'logout'])->name('admin.logout');
 
-// 管理者TOP
 Route::middleware('admin')->group(function () {
+    // 管理者TOP
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-});
 
-// 管理者ブログ作成
-Route::middleware('admin')->group(function () {
+    // 管理者ブログ作成
     Route::get('admin/blog/create', [AdminBlogController::class, 'create'])->name('admin.blog.create');
     Route::post('/blogs', [AdminBlogController::class, 'store'])->name('admin.blog.store');
-});
 
-// 管理者ブログ一覧
-Route::middleware('admin')->group(function () {
+    // 管理者ブログ一覧
     Route::get('admin/blogs', [AdminBlogController::class, 'blogLists'])->name('admin.blogLists');
-});
 
-// ブログ詳細ページ
-Route::middleware('admin')->group(function () {
+    // ブログ詳細ページ
     Route::get('admin/blogs/{id}', [AdminBlogController::class, 'blogDetail'])->name('admin.blogDetail');
+
+    // コメントの削除
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 });
 
-Route::middleware('admin')->group(function () {
-    Route::get('/', function () {
-        return view('top');
-    });
-});
+// コメントの保存
+Route::post('/blogs/{blog}/comments', [CommentController::class, 'store'])->name('comments.store');
