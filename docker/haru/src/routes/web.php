@@ -45,6 +45,13 @@ Route::middleware('admin')->group(function () {
 
     // コメントの削除
     Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+
+    // ブログ編集ページ
+    Route::get('/admin/blogs/{blog}/edit', [AdminBlogController::class, 'edit'])->name('admin.blogEdit');
+    Route::PUT('/admin/blogs/{blog}', [AdminBlogController::class, 'update'])->name('admin.blogUpdate');
+
+    //  ブログ削除機能
+    Route::delete('/admin/blogs/{blog}', [AdminBlogController::class, 'destroy'])->name('admin.blogDelete');
 });
 
 // コメントの保存

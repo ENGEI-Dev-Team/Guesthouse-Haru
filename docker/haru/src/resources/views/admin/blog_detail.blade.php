@@ -3,7 +3,7 @@
 @section('title', 'ブログ詳細ページ')
 
 @section('styles')
-<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+<link rel="stylesheet" href="{{ asset('css/detail.css') }}">
 <link rel="stylesheet" href="{{ asset('css/blog_detail.css') }}">
 @endsection
 
@@ -11,22 +11,43 @@
 <section class="blog-detail">
   <div class="inner">
     <section class="blog-container">
+      @if (session('blog_success'))
+      <div class="alert alert-success">
+        {{ session('blog_success') }}
+      </div>
+      @endif
+      @if (session('create_success'))
+      <div class="alert alert-success">
+        {{ session('create_success') }}
+      </div>
+      @endif
+      
       <div class="blog-img">
         @if ($blog->image)
-        <img src="{{ asset('storage/' . $blog->image) }}" alt="{{ $blog->title }}">
+        <img src="{{ Storage::url($blog->image) }}" alt="{{ $blog->title }}">
         @endif
+
       </div>
       <div class="contents">
         <h3 class="blog-title">{{ $blog->title }}</h3>
         <p class="blog-content">{{ $blog->content }}</p>
         <p class="blog-date">{{ $blog->created_at->format('F d, Y') }}</p>
+        <div class="blog-actions">
+          <a href="{{ route('admin.blogEdit', $blog) }}" class="edit-button">編集</a>
+
+          <form action="{{ route('admin.blogDelete', $blog) }}" method="post" class="delete-form">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="delete-button">削除</button>
+          </form>
+        </div>
       </div>
     </section>
 
     <section class="comments">
-      @if (session('success'))
+    @if (session('comment_success'))
       <div class="alert alert-success">
-        {{ session('success') }}
+        {{ session('comment_success') }}
       </div>
       @endif
 
@@ -58,7 +79,7 @@
                 <form action="{{ route('comments.destroy', $comment) }}" method="post" class="delete-form">
                   @csrf
                   @method('DELETE')
-                  <button type="submit" class="delete-button">Delete</button>
+                  <button type="submit" class="delete-button">削除</button>
                 </form>
               </div>
             </div>

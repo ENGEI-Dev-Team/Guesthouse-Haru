@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class AdminBlogController extends Controller
@@ -57,7 +58,7 @@ class AdminBlogController extends Controller
         // カテゴリを関連付け
         $blog->categories()->sync($validatedData['categories']);
 
-        return redirect()->route('admin.blogLists')->with('success', 'ブログが作成されました。');
+        return redirect()->route('admin.blogLists')->with('create_success', 'ブログが作成されました。');
     }
 
     // ブログ一覧ページ
@@ -101,5 +102,55 @@ class AdminBlogController extends Controller
     {
         $blog = Blog::with('comments')->findOrFail($id);
         return view('admin.blog_detail', compact('blog'));
+    }
+
+    // ブログ編集
+    public function edit(Blog $blog)
+    {
+        $categories = Category::all();
+        return view('admin.blog_edit', compact('blog', 'categories'));
+    }
+
+    public function update(Request $request, Blog $blog)
+    {
+        $validatedData = $request->validate([
+            'image' => 'image|mimes:jpeg,png,jpg,webp',
+            'title' => 'required|string|max:255',
+            'content' => 'required|string|',
+            'categories' => 'required|array'
+        ], [
+            'image.image' => '画像は画像ファイルである必要があります。',
+            'image.mimes' => '画像はjpeg、png、jpg、またはwebp形式である必要があります。',
+            'title.required' => 'タイトルを入力してください。',
+            'title.max' => 'タイトルは255文字以内でなければなりません。',
+            'content.required' => '内容を入力してください。',
+            'categories.required' => '少なくとも1つのカテゴリを選択してください。',
+        ]);
+
+        if ($request->hasFile('image')) {
+            if ($blog->image) {
+                Storage::delete($blog->image);
+            }
+
+            $imagePath = $request->file('image')->store('images/blogs', 'public');
+            $blog->update(['image' => $imagePath]);
+        }
+
+        $blog->update([
+            'title' => $validatedData['title'],
+            'content' => $validatedData['content'],
+        ]);
+
+            $blog->categories()->sync($validatedData['categories']);
+
+            return redirect()->route('admin.blogDetail', ['id' => $blog->id])->with('blog_success', 'ブログを更新しました。');
+    }
+
+    // ブログ削除
+    public function destroy(Blog $blog)
+    {
+        $blog->delete();
+
+        return redirect()->route('admin.blogLists', $blog->id)->with('success', 'ブログを削除しました。');
     }
 }

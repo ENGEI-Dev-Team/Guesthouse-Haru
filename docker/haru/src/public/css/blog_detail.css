@@ -52,6 +52,39 @@
   color: #777;
 }
 
+.blog-actions {
+  display: flex; 
+  justify-content: center; 
+  margin-top: 20px;
+}
+
+.edit-button,
+.delete-button {
+  margin: 0 10px; /* ボタン間のスペースを追加 */
+  padding: 10px 15px; /* ボタンのパディングを調整 */
+  font-size: 1rem; /* フォントサイズを調整 */
+  border-radius: 4px; /* 角を丸くする */
+  cursor: pointer; /* カーソルをポインタに変更 */
+  transition: background-color 0.3s; /* ホバー時のトランジションを追加 */
+}
+
+.edit-button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.edit-button:hover {
+  background-color: #388e3c;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+
 .comments {
   margin: 50px 0;
   padding: 20px;

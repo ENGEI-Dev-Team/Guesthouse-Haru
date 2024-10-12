@@ -23,12 +23,12 @@ class CommentController extends Controller
             'content' => $validatedData['content'],
         ]);
 
-        return redirect()->back()->with('success', 'Comment added successfully.');
+        return redirect()->back()->with('comment_success', 'Comment added successfully.');
     }
 
     public function destroy(Comment $comment)
     {
         $comment->delete();
-        return redirect()->back()->with('success', 'Comment deleted successfully.');
+        return redirect()->back()->with('comment_success', 'コメントを削除しました。');
     }
 }
