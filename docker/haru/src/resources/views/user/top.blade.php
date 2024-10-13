@@ -55,7 +55,7 @@
       <img src="{{  asset('images/house14.webp') }}" alt="">
       <img src="{{  asset('images/house10.jpg') }}" alt="">
     </div>
-    <a href="" class="detail-link">Show all photos ></a>
+    <a href="{{ route('user.room') }}" class="detail-link">Show all photos ></a>
   </div>
 
   </div>

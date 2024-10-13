@@ -57,4 +57,10 @@ class UserController extends Controller
         $blog = Blog::with('comments')->findOrFail($id);
         return view('user.blog_detail', compact('blog'));
     }
+
+    // 内装ページ
+    public function room()
+    {
+        return view('user.room');
+    }
 }

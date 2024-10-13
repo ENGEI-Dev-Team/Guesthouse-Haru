@@ -69,3 +69,6 @@ Route::get('/blogs', [UserController::class, 'blogLists'])->name('user.blogLists
 
 // ブログ詳細ページ
 Route::get('/blogs/{id}', [UserController::class, 'blogDetail'])->name('user.blogDetail');
+
+// 内装ページ
+Route::get('/room', [userController::class, 'room'])->name('user.room');
