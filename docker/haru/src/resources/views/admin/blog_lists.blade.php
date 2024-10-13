@@ -39,11 +39,17 @@
 
 <section class="blog-lists">
   <div class="inner">
-    @if (session('success'))
+    @if (session('create_success'))
     <div class="alert alert-success">
-      {{ session('success') }}
+      {{ session('create_success') }}
     </div>
     @endif
+    @if (session('delete_success'))
+    <div class="alert alert-success">
+      {{ session('delete_success') }}
+    </div>
+    @endif
+
     <div class="blog-container">
       @foreach ($blogs as $blog)
       <a href="{{ route('admin.blogDetail', ['id' => $blog->id]) }}" class="blog-item">

@@ -11,9 +11,9 @@
 <section class="blog-detail">
   <div class="inner">
     <section class="blog-container">
-      @if (session('blog_success'))
+      @if (session('update_success'))
       <div class="alert alert-success">
-        {{ session('blog_success') }}
+        {{ session('update_success') }}
       </div>
       @endif
       @if (session('create_success'))
@@ -21,7 +21,12 @@
         {{ session('create_success') }}
       </div>
       @endif
-      
+      @if (session('delete_success'))
+      <div class="alert alert-success">
+        {{ session('delete_success') }}
+      </div>
+      @endif
+
       <div class="blog-img">
         @if ($blog->image)
         <img src="{{ Storage::url($blog->image) }}" alt="{{ $blog->title }}">
@@ -45,12 +50,6 @@
     </section>
 
     <section class="comments">
-    @if (session('comment_success'))
-      <div class="alert alert-success">
-        {{ session('comment_success') }}
-      </div>
-      @endif
-
       <div class="comment-post">
         <h4 class="comment-title">Comment this post</h4>
         <form action="{{ route('comments.store', $blog->id) }}" method="post" class="comment-form">
@@ -66,7 +65,14 @@
           <button type="submit">Submit</button>
         </form>
       </div>
+    </section>
 
+    <section class="comments">
+    @if (session('comment_success'))
+      <div class="alert alert-success">
+        {{ session('comment_success') }}
+      </div>
+      @endif
       <div class="comment-lists">
         <h4 class="comment-title">Comment lists</h4>
         <ul class="comment-item">
