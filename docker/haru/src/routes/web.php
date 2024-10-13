@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminBlogController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -56,3 +57,9 @@ Route::middleware('admin')->group(function () {
 
 // コメントの保存
 Route::post('/blogs/{blog}/comments', [CommentController::class, 'store'])->name('comments.store');
+
+
+// ユーザー用ルート
+
+// ユーザートップページ
+Route::get('/', [UserController::class, 'index'])->name('user.index');
