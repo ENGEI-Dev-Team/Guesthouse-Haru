@@ -21,6 +21,7 @@
     </div>
     <nav>
       <ul class="nav-menu">
+      <li><a href="{{ route('user.blogLists') }}" class="nav-list">Blogs</a></li>
         <li class="dropdown">
           <a href="javascript:void(0);" class="nav-list" id="language-btn">EN &#9663;</a>
           <ul class="dropdown-menu" id="dropdown-menu">
