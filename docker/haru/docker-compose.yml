@@ -41,3 +41,9 @@ services:
       - "3000:80" # localhost:3000でアクセスできる
     volumes:
       - ./volumes/docker/phpmyadmin/sessions:/sessions
+
+  mailpit:
+    image: axllent/mailpit
+    ports:
+      - "8025:8025" # Webインターフェース
+      - "1025:1025" # SMTP

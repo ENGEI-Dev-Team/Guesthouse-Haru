@@ -12,7 +12,7 @@
 <body>
   <header class="header">
     <div class="logo">
-      <a href="" class="logo-link">
+      <a href="{{ route('user.index') }}}" class="logo-link">
         <div class="logo-img">
           <img src="{{ asset('images/logo.webp') }}" alt="Haru.のロゴ">
         </div>
@@ -23,7 +23,7 @@
       <ul class="nav-menu">
         <li><a href="{{ route('admin.dashboard') }}" class="nav-list">TOP</a></li>
         <li><a href="" class="nav-list">予約一覧</a></li>
-        <li><a href="" class="nav-list">お問い合わせ</a></li>
+        <li><a href="{{ route('admin.contact') }}" class="nav-list">お問い合わせ</a></li>
         <li><a href="{{ route('admin.blog.create') }}" class="nav-list">ブログ作成</a></li>
         <li><a href="{{ route('admin.blogLists') }}" class="nav-list">ブログ一覧</a></li>
         <li>
