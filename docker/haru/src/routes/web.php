@@ -3,10 +3,15 @@
 use App\Http\Controllers\AdminBlogController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\IcalController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -85,3 +90,6 @@ Route::get('/room', [userController::class, 'room'])->name('user.room');
 
 // お問い合わせ機能
 Route::post('/admin/contact', [ContactController::class, 'store'])->name('contact.store');
+
+// 予約ページ
+Route::get('/reservation', [ReservationController::class, 'index'])->name('user.reservation');

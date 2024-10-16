@@ -28,7 +28,7 @@
             <li><a href="" class="nav-list">日本語 (JP)</a></li>
           </ul>
         </li>
-        <li><a href="" class="nav-list book-btn">Book Now</a></li>
+        <li><a href="{{ route('user.reservation') }}" class="nav-list book-btn">Book Now</a></li>
       </ul>
     </nav>
   </header>
