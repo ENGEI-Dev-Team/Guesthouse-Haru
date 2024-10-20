@@ -22,9 +22,6 @@ docker-compose up -d
 //コンテナの中に入る
 docker-compose exec php-apache bash
 
-//ディレクトリ移動
-cd /var/www/haru/src
-
 //ライブラリのインストール
 composer install
 ```
@@ -46,6 +43,14 @@ docker-compose down
 
 <br>
 
+# コンテナの停止
+docker-compose down
+
+# コンテナ内でのコマンド実行
+docker-compose exec app [command]
+
+<br>
+
 ## ページ紹介
 
 - ユーザー画面: [localhost:8000](http://localhost:8000)
@@ -58,21 +63,4 @@ docker-compose down
 
 ### PHPMyAdmin
 
-- [localhost:4040](http://localhost:4040)
-
-## 使用するコマンド一覧
-
-### Docker関連
-
-```bash
-# Dockerディレクトリに移動
-cd docker/haru
-
-# コンテナの起動
-docker-compose up -d
-
-# コンテナの停止
-docker-compose down
-
-# コンテナ内でのコマンド実行
-docker-compose exec app [command]
+- [localhost:3306](http://localhost:3000)
