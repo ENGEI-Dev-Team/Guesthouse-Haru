@@ -5,19 +5,21 @@
 @section('styles')
 <link rel="stylesheet" href="{{ asset('css/reservation.css') }}">
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
-
 @endsection
 
 @section('content')
 <section class="top-section">
   <img src="{{ asset('images/teshima5.jpg') }}" alt="豊島の風景" class="top-image">
+  <div class="top-texts">
+    <h3 class="top-title animated-text">Welcome to Haru.</h3>
+  </div>
 </section>
-
 
 <section class="reservation-calendar">
   <div class="inner">
-    <h2 class="section-title">Available day</h2>
+    <h2 class="section-title calendar-text">Available day</h2>
     <div id="calendar"></div>
+    <p class="calendar-description">*Please select the dates you wish to book and check the details on each booking site (Airbnb, vacationSTAY).</p>
   </div>
 </section>
 
@@ -47,38 +49,33 @@
 
     <div class="detail-group">
       <div class="detail-head">
-        <p>Check-in</p>
+        <p>Check-in / out</p>
       </div>
       <div class="detail-text">
-        <p>15:00 ~</p>
-      </div>
-    </div>
-
-    <div class="detail-group">
-      <div class="detail-head">
-        <p>Check-out</p>
-      </div>
-      <div class="detail-text">
-        <p>~ 10:00</p>
+        <p>15:00 ~ / ~ 10:00</p>
       </div>
     </div>
   </div>
 </section>
-
 @endsection
 
 @section('scripts')
-
 <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.5/main.min.js'></script>
 <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.5/main.min.js'></script>
+
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-
     var calendarEl = document.getElementById('calendar');
+    var events = @json($availableEvents);
+
     var calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: 'dayGridMonth',
-      events: '/get-calendar-date',
+      events: events,
+      eventClick: function(info) {
+        alert('Available date clicked: ' + info.event.start.toISOString().slice(0, 10));
+      },
     });
+
     calendar.render();
   });
 </script>

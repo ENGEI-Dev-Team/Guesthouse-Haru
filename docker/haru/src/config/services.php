@@ -31,4 +31,11 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'), 
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'), 
+        'calendar_id' => env('GOOGLE_CALENDAR_ID'),
+        'calendar_key' => env('GOOGLE_CALENDAR_API_KEY'),
+        'service_account_json' => env('GOOGLE_SERVICE_ACCOUNT_JSON'),
+    ],
 ];
