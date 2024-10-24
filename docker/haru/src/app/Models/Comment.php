@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class Blog extends Model
+class Comment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['admin_id', 'title', 'content', 'image'];
+    protected $fillable = ['blog_id', 'author', 'content'];
 
     protected $keyType = 'string';
     public $incrementing = false; 
@@ -23,13 +23,8 @@ class Blog extends Model
         });
     }
 
-    public function categories()
+    public function blog()
     {
-        return $this->belongsToMany(Category::class, 'blog_categories', 'blog_id', 'category_id');
-    }
-
-    public function comments()
-    {
-        return $this->hasMany(Comment::class);
+        return $this->belongsTo(Blog::class);
     }
 }
