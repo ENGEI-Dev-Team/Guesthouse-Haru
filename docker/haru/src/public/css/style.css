@@ -92,25 +92,36 @@ body {
   margin: 0 auto;
 }
 
-/* ボタン用のスタイル btn */
 .btn {
-  background-color: #fff; /* ボタンの背景色（青色） */
-  border: none; /* ボーダーを削除 */
-  border-radius: 5px; /* 角を丸める */
-  cursor: pointer; /* カーソルをポインターに変更 */
+  background-color: #fff; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer; 
   padding: 5px 10px;
-  color: #333; /* 文字色を白に */
+  color: #333; 
 }
 
-/* ホバー時のスタイル変更 */
 .btn:hover {
-  background-color: #0056b3; /* ホバー時の背景色（濃い青） */
+  background-color: #0056b3; 
   color: #fff;
 }
 
-/* 全体のリンクとボタンの調整 */
 .nav-list.btn {
-  display: inline-block; /* インラインブロックにして他の要素と調整しやすく */
+  display: inline-block;
+}
+
+.error-message {
+  background-color: #ffebee;
+  border: 1px solid #f44336;
+  color: #f44336;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+}
+
+.error-message ul {
+  margin: 0;
+  padding-left: 1.5rem;
 }
 
 .section-title {

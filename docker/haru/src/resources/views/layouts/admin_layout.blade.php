@@ -24,8 +24,8 @@
         <li><a href="{{ route('admin.dashboard') }}" class="nav-list">TOP</a></li>
         <li><a href="" class="nav-list">予約一覧</a></li>
         <li><a href="" class="nav-list">お問い合わせ</a></li>
-        <li><a href="" class="nav-list">ブログ作成</a></li>
-        <li><a href="" class="nav-list">ブログ一覧</a></li>
+        <li><a href="{{ route('admin.blog.create') }}" class="nav-list">ブログ作成</a></li>
+        <li><a href="{{ route('admin.blogLists') }}" class="nav-list">ブログ一覧</a></li>
         <li>
           <form action="{{ route('admin.logout') }}" method="POST" class="logout-form">
             @csrf

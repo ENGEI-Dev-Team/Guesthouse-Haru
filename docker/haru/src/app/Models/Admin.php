@@ -13,7 +13,10 @@ class Admin extends Model implements Authenticatable
 {
     use HasFactory, UserAuthenticatable;
 
-    protected $fillable = ['id', 'name', 'email', 'password'];
+    protected $fillable = ['name', 'email', 'password'];
+
+    protected $keyType = 'string'; 
+    public $incrementing = false;
 
     // UUIDの設定
     public static function boot()
