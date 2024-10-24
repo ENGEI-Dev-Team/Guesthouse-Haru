@@ -63,3 +63,9 @@ Route::post('/blogs/{blog}/comments', [CommentController::class, 'store'])->name
 
 // ユーザートップページ
 Route::get('/', [UserController::class, 'index'])->name('user.index');
+
+// ブログ一覧ページ
+Route::get('/blogs', [UserController::class, 'blogLists'])->name('user.blogLists');
+
+// ブログ詳細ページ
+Route::get('/blogs/{id}', [UserController::class, 'blogDetail'])->name('user.blogDetail');

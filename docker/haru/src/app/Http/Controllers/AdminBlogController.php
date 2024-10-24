@@ -143,7 +143,7 @@ class AdminBlogController extends Controller
 
             $blog->categories()->sync($validatedData['categories']);
 
-            return redirect()->route('admin.blogDetail', ['id' => $blog->id])->with('blog_success', 'ブログを更新しました。');
+            return redirect()->route('admin.blogDetail', ['id' => $blog->id])->with('update_success', 'ブログを更新しました。');
     }
 
     // ブログ削除
@@ -151,6 +151,6 @@ class AdminBlogController extends Controller
     {
         $blog->delete();
 
-        return redirect()->route('admin.blogLists', $blog->id)->with('success', 'ブログを削除しました。');
+        return redirect()->route('admin.blogLists', $blog->id)->with('delete_success', 'ブログを削除しました。');
     }
 }

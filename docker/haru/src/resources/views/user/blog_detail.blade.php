@@ -1,4 +1,4 @@
-@extends('layouts.admin_layout')
+@extends('layouts.user_layout')
 
 @section('title', 'ブログ詳細ページ')
 
@@ -11,19 +11,14 @@
 <section class="blog-detail">
   <div class="inner">
     <section class="blog-container">
-      @if (session('update_success'))
+      @if (session('blog_success'))
       <div class="alert alert-success">
-        {{ session('update_success') }}
+        {{ session('blog_success') }}
       </div>
       @endif
       @if (session('create_success'))
       <div class="alert alert-success">
         {{ session('create_success') }}
-      </div>
-      @endif
-      @if (session('delete_success'))
-      <div class="alert alert-success">
-        {{ session('delete_success') }}
       </div>
       @endif
 
@@ -37,15 +32,6 @@
         <h3 class="blog-title">{{ $blog->title }}</h3>
         <p class="blog-content">{{ $blog->content }}</p>
         <p class="blog-date">{{ $blog->created_at->format('F d, Y') }}</p>
-        <div class="blog-actions">
-          <a href="{{ route('admin.blogEdit', $blog) }}" class="edit-button">編集</a>
-
-          <form action="{{ route('admin.blogDelete', $blog) }}" method="post" class="delete-form">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="delete-button">削除</button>
-          </form>
-        </div>
       </div>
     </section>
 
@@ -68,7 +54,7 @@
     </section>
 
     <section class="comments">
-    @if (session('comment_success'))
+      @if (session('comment_success'))
       <div class="alert alert-success">
         {{ session('comment_success') }}
       </div>
@@ -82,11 +68,6 @@
               <p class="commenter-name">{{ $comment->author }}</p>
               <div class="comment-actions">
                 <span class="comment-date">{{ $comment->created_at->format('F d, Y') }}</span>
-                <form action="{{ route('comments.destroy', $comment) }}" method="post" class="delete-form">
-                  @csrf
-                  @method('DELETE')
-                  <button type="submit" class="delete-button">削除</button>
-                </form>
               </div>
             </div>
             <p class="comment-content">{{ $comment->content }}</p>

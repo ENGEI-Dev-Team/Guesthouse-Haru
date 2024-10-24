@@ -133,7 +133,7 @@
     </div>
     <div class="blog-container">
       @foreach ($latestBlogs as $blog)
-      <a href="" class="blog-item">
+      <a href="{{ route('user.blogLists') }}" class="blog-item">
         @if ($blog->image)
         <div class="blog-image">
           <img src="{{ asset('storage/' . $blog->image) }}" alt="{{ $blog->title }}">

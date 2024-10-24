@@ -1,4 +1,4 @@
-@extends('layouts.admin_layout')
+@extends('layouts.user_layout')
 
 @section('title', 'ブログ一覧')
 @section('styles')
@@ -9,8 +9,10 @@
 @section('content')
 <section class="blogs-filter">
   <div class="inner">
-    <h2 class="section-title">Blog lists</h2>
-    <form action="{{ route('admin.blogLists') }}" method="get" class="filter-form">
+    <div class="section-title">
+      <h2>Blog lists</h2>
+    </div>
+    <form action="{{ route('user.blogLists') }}" method="get" class="filter-form">
       <div class="form-group">
         <input type="text" name="keyword" id="keyword" value="{{ request('keyword') }}" placeholder="Keyword...">
       </div>
@@ -32,27 +34,21 @@
       </div>
 
       <button type="submit" class="filter-button">Search</button>
-      <a href="{{ route('admin.blogLists') }}" class="filter-button">All</a>
+      <a href="{{ route('user.blogLists') }}" class="filter-button">All</a>
     </form>
   </div>
 </section>
 
 <section class="blog-lists">
   <div class="inner">
-    @if (session('create_success'))
+    @if (session('success'))
     <div class="alert alert-success">
-      {{ session('create_success') }}
+      {{ session('success') }}
     </div>
     @endif
-    @if (session('delete_success'))
-    <div class="alert alert-success">
-      {{ session('delete_success') }}
-    </div>
-    @endif
-
     <div class="blog-container">
       @foreach ($blogs as $blog)
-      <a href="{{ route('admin.blogDetail', ['id' => $blog->id]) }}" class="blog-item">
+      <a href="{{ route('user.blogDetail', ['id' => $blog->id]) }}" class="blog-item">
         @if ($blog->image)
         <div class="blog-image">
           <img src="{{ asset('storage/' . $blog->image) }}" alt="{{ $blog->title }}">

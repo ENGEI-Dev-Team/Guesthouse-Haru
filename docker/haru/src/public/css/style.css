@@ -2,13 +2,27 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Georgia', serif; 
 }
 
 body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  line-height: 1.6;
 }
+
+a {
+  text-decoration: none;  
+  margin: 0; 
+  padding: 0;
+}
+
+li {
+  margin: 0; 
+  padding: 0;
+}
+
 
 .header {
   display: flex;
@@ -20,7 +34,7 @@ body {
   width: 100%;
   height: 60px; 
   z-index: 100;
-  padding: 10px;
+  padding: 10px 5%;
   text-align: center;
   background-color: #fff;
 }
@@ -50,13 +64,10 @@ body {
 .header-title {
   font-size: 1.3rem;
   font-weight: bold;
-  font-family: 'Georgia', serif; 
 }
 
 .nav-menu {
   list-style-type: none;
-  margin: 0;
-  padding: 0;
   text-align: center;
 }
 
@@ -68,16 +79,11 @@ body {
   text-decoration: none;
   color: #333;
   padding: 5px 10px;
-  border-radius: 5px;
   transition: background-color 0.3s ease;
 }
 
-.nav-menu li a:hover {
-  background-color: #ddd;
-}
-
 .nav-list {
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: #333;
   text-decoration: none;
 }
@@ -86,10 +92,46 @@ body {
   color: #007BFF;
 }
 
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  display: none; 
+  position: absolute;
+  width: max-content;
+  top: 100%;
+  right: 3%;
+  padding: 5px 10px;
+  list-style-type: none;
+  border-radius: 5px;
+  border: 2px solid #0056b3;
+  background-color: #fff;
+  transition: background-color 0.3s ease;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.book-btn {
+  background-color: #007BFF;
+  padding: 10px 20px;
+  border-radius: 5px; 
+  font-weight: bold; 
+  transition: background-color 0.3s ease;
+}
+
+.book-btn:hover {
+  background-color: #0056b3; 
+}
+
+.book-btn {
+  color: #fff !important; 
+}
+
 .inner {
   flex: 1; 
   width: 80%;
   margin: 0 auto;
+  max-width: 1200px;
 }
 
 .btn {
@@ -102,13 +144,11 @@ body {
 }
 
 .btn:hover {
-  background-color: #0056b3; 
+  background-color: #388e3c; 
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
   color: #fff;
 }
 
-.nav-list.btn {
-  display: inline-block;
-}
 
 .error-message {
   background-color: #ffebee;
@@ -124,13 +164,20 @@ body {
   padding-left: 1.5rem;
 }
 
+.alert {
+  margin-bottom: 15px;
+  padding: 10px 15px;
+  background-color: #dff0d8; /
+  color: #3c763d; 
+  border: 1px solid #d6e9c6; 
+  border-radius: 4px;
+}
+
 .section-title {
   font-size: 1.8rem;
   font-weight: bold;
   border-bottom: 2px solid #007BFF;
-  padding-bottom: 10px;
-  margin-bottom: 25px;
-  color: #333;
+  margin-bottom: 20px;
 }
 
 footer {
