@@ -5,8 +5,14 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\GoogleCalendarController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,6 +41,21 @@ Route::middleware('admin')->group(function () {
     // 管理者TOP
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 
+    // 予約ページ
+    Route::get('/admin/dashboard', [GoogleCalendarController::class, 'index'])->name('admin.dashboard');
+
+    // カレンダーの日付を取得
+    Route::get('/get-calendar-date', [GoogleCalendarController::class, 'getCalendarDate'])->name('get.calendar.date');
+
+    // Google OAuth ルート
+    Route::get('/google-auth', [GoogleCalendarController::class, 'redirectToGoogle'])->name('google.auth');
+    // リダイレクト URI の修正
+    Route::get('/google/callback', [GoogleCalendarController::class, 'callback'])->name('google.callback');
+
+
+
+
+
     // 管理者ブログ作成
     Route::get('admin/blog/create', [AdminBlogController::class, 'create'])->name('admin.blog.create');
     Route::post('/blogs', [AdminBlogController::class, 'store'])->name('admin.blog.store');
@@ -62,7 +83,6 @@ Route::middleware('admin')->group(function () {
     Route::post('/admin/contact/{id}', [ContactController::class, 'updateStatus'])->name('updateStatus');
 
     Route::get('/admin/dashboard', [ContactController::class, 'dashboard'])->name('admin.dashboard');
-
 });
 
 // コメントの保存
@@ -81,7 +101,13 @@ Route::get('/blogs', [UserController::class, 'blogLists'])->name('user.blogLists
 Route::get('/blogs/{id}', [UserController::class, 'blogDetail'])->name('user.blogDetail');
 
 // 内装ページ
-Route::get('/room', [userController::class, 'room'])->name('user.room');
+Route::get('/room', [UserController::class, 'room'])->name('user.room');
 
 // お問い合わせ機能
 Route::post('/admin/contact', [ContactController::class, 'store'])->name('contact.store');
+
+// 予約ページ
+Route::get('/reservation', [ReservationController::class, 'index'])->name('user.reservation');
+
+// カレンダーの日付を取得
+Route::get('/get-calendar-date', [ReservationController::class, 'getCalendarDate'])->name('get.calendar.date');
