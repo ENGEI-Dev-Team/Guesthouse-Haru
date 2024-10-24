@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminBlogController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 /*
@@ -53,6 +54,15 @@ Route::middleware('admin')->group(function () {
 
     //  ブログ削除機能
     Route::delete('/admin/blogs/{blog}', [AdminBlogController::class, 'destroy'])->name('admin.blogDelete');
+
+    // お問い合わせページ
+    Route::get('/admin/contact', [ContactController::class, 'index'])->name('admin.contact');
+
+    // ステータスの更新管理
+    Route::post('/admin/contact/{id}', [ContactController::class, 'updateStatus'])->name('updateStatus');
+
+    Route::get('/admin/dashboard', [ContactController::class, 'dashboard'])->name('admin.dashboard');
+
 });
 
 // コメントの保存
@@ -72,3 +82,6 @@ Route::get('/blogs/{id}', [UserController::class, 'blogDetail'])->name('user.blo
 
 // 内装ページ
 Route::get('/room', [userController::class, 'room'])->name('user.room');
+
+// お問い合わせ機能
+Route::post('/admin/contact', [ContactController::class, 'store'])->name('contact.store');
