@@ -86,3 +86,9 @@ input[type="file"]::file-selector-button:hover {
   background-color: #999999;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
 }
+
+@media (max-width: 768px) {
+  .create-blog {
+    padding: 50px 20px;
+  }
+}

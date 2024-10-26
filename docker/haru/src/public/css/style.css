@@ -73,7 +73,9 @@ li {
 
 .nav-menu li {
   display: inline-block;
+  padding: 5px;
 }
+
 
 .nav-menu li a {
   text-decoration: none;
@@ -92,28 +94,10 @@ li {
   color: #007BFF;
 }
 
-.dropdown {
-  position: relative;
-}
-
-.dropdown-menu {
-  display: none; 
-  position: absolute;
-  width: max-content;
-  top: 100%;
-  right: 3%;
-  padding: 5px 10px;
-  list-style-type: none;
-  border-radius: 5px;
-  border: 2px solid #0056b3;
-  background-color: #fff;
-  transition: background-color 0.3s ease;
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
-}
 
 .book-btn {
   background-color: #007BFF;
-  padding: 10px 20px;
+  padding: 5px;
   border-radius: 5px; 
   font-weight: bold; 
   transition: background-color 0.3s ease;
@@ -125,6 +109,10 @@ li {
 
 .book-btn {
   color: #fff !important; 
+}
+
+section {
+  padding: 60px 20px;
 }
 
 .inner {
@@ -148,7 +136,6 @@ li {
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
   color: #fff;
 }
-
 
 .error-message {
   background-color: #ffebee;
@@ -189,4 +176,97 @@ footer {
   display: flex;
   justify-content: center; 
   align-items: center; 
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  width: 30px; 
+  height: 30px; 
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 5px; 
+}
+
+.hamburger span {
+  height: 3px; 
+  width: 100%;
+  background-color: #333;
+  margin: 3px 0; 
+  transition: 0.3s;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: translateY(-5px) rotate(-45deg); 
+}
+
+
+@media (max-width: 768px) {
+  .header-title {
+    font-size: 1.0rem;
+  }
+
+  .logo img {
+    height: 30px;
+  }
+
+  .nav-menu li {
+    display: block;
+  }
+
+  .nav-list {
+    font-size: 1rem;
+  }
+
+  .inner {
+    width: 90%;
+    max-width: 100%; 
+  }
+
+  .section-title {
+    font-size: 1.0rem;
+  }
+
+  .book-btn {
+    font-size: 0.8rem;
+    padding: 4px 10px;
+  }
+
+  .footer {
+    flex-direction: column;
+    font-size: 0.9rem;
+    padding: 15px;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    width: 100%;
+  }
+
+  .nav-menu.open {
+    display: flex;
+  }
+
+  .nav-list {
+    text-align: center;
+  }
 }

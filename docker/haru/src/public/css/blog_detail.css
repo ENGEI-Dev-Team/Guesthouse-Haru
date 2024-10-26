@@ -1,10 +1,7 @@
-.blog-detail {
-  padding: 60px 20px 100px 20px;
-}
 
 .blog-container {
-  margin: 50px 0;
   text-align: center;
+  margin-top: 20px;
 }
 
 .blog-img {
@@ -34,10 +31,11 @@
 }
 
 .blog-title {
-  font-size: 1.5rem;
+  font-size: 1.17em;
   margin-bottom: 20px;
   font-weight: bold;
 }
+
 
 .blog-content {
   font-size: 1rem;
@@ -60,12 +58,12 @@
 
 .edit-button,
 .delete-button {
-  margin: 0 10px; /* ボタン間のスペースを追加 */
-  padding: 10px 15px; /* ボタンのパディングを調整 */
-  font-size: 1rem; /* フォントサイズを調整 */
-  border-radius: 4px; /* 角を丸くする */
-  cursor: pointer; /* カーソルをポインタに変更 */
-  transition: background-color 0.3s; /* ホバー時のトランジションを追加 */
+  margin: 0 10px;
+  padding: 10px 15px; 
+  font-size: 1rem;
+  border-radius: 4px; 
+  cursor: pointer; 
+  transition: background-color 0.3s; 
 }
 
 .edit-button {
@@ -86,7 +84,7 @@
 
 
 .comments {
-  margin: 50px 0;
+  margin-top: 30px;
   padding: 20px;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
@@ -94,7 +92,6 @@
 }
 
 .comment-form {
-  margin-bottom: 30px;
   padding: 20px;
   background-color: #ffffff;
   border: 1px solid #ddd;
@@ -190,4 +187,10 @@
 .comment-content {
   font-size: 1rem;
   line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .comment-form button {
+    padding: 10px;
+  }
 }

@@ -1,0 +1,15 @@
+
+/* 予約カレンダーの背景色 */
+.reservation-calendar {
+  background-color: #f5f5f5; /* 明るいグレー */
+}
+
+/* お問い合わせセクションの背景色 */
+.contact {
+  background-color: #ffffff; /* 白 */
+}
+
+/* ブログセクションの背景色 */
+.blogs {
+  background-color: #f5f5f5; /* 明るいブルー */
+}

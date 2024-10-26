@@ -113,12 +113,44 @@
   margin-bottom: 10px;
 }
 
+.detail-btn {
+  text-align: center;
+}
 .detail-link {
-  color: #007BFF;
-  text-decoration: none;
-  font-weight: bold;
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 20px;
+  color: #0056b3;
+  text-align: center;
+  border: 2px solid #0056b3;
+  background-color: #fff; 
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
 .detail-link:hover {
-  text-decoration: underline;
+  background-color: #004494; 
+  color: #fff;
+}
+
+/* レスポンシブスタイル */
+@media (max-width: 768px) {
+  .blog-item {
+    flex: 1 1 100%; 
+    max-width: 100%;
+  }
+
+  .filter-form {
+    flex-direction: column; 
+  }
+
+  .form-group {
+    flex: none; 
+    width: 100%; 
+  }
+
+  .filter-button {
+    width: 100%; 
+    text-align: center;
+  }
 }

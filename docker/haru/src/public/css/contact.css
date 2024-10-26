@@ -1,5 +1,4 @@
 .contact {
-  margin: 0 auto; 
   padding: 80px 20px;
 }
 
@@ -77,6 +76,16 @@ select {
   border-collapse: collapse; 
 }
 
+.table a {
+  display: block; 
+  text-decoration: none; 
+  color: inherit;
+}
+
+.table tr {
+  cursor: pointer; 
+}
+
 .table th, .table td {
   border: 1px solid #ddd;
   padding: 10px; 
@@ -122,4 +131,59 @@ select {
 
 .page-link {
   font-size: 20px;
+}
+
+@media (max-width: 1000px) {
+
+  .filter {
+    padding: 8px;
+  }
+
+  .filter-item {
+    font-size: 12px;
+  }
+
+  .filter-row {
+    flex-direction: column;
+  }
+
+  .filter-lists {
+    flex: 1 1 100%;
+  }
+
+  .submit-button,
+  .all-button {
+    font-size: 14px;
+    padding: 6px 8px;
+  }
+
+  .table, .table thead, .table tbody, .table th, .table td, .table tr {
+    display: block;
+  }
+
+  .table tr {
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+  }
+
+  .table th {
+    display: none; /* Hide table headers on mobile */
+  }
+
+  .table td {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 10px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .table td:last-child {
+    border-bottom: none;
+  }
+
+  .pagination li {
+    padding: 5px;
+  }
 }
