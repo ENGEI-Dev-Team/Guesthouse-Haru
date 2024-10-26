@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name', 255);
             $table->string('email', 255);
-            $table->string('message', 255);
+            $table->text('message'); 
             $table->string('status', 255)->default('unresolved');
             $table->timestamps();
         });

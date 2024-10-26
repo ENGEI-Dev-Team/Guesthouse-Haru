@@ -14,7 +14,7 @@ class ContactController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|email|max:255',
-            'message' => 'required|max:255',
+            'message' => 'required|max:5000',
         ], [
             'name.required' => 'Please enter your name',
             'email.required' => 'Please enter your email',
@@ -24,12 +24,12 @@ class ContactController extends Controller
         $contact = Contact::create([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
-            'message' => $validatedData['message'],
+            'message' => $validatedData['message'],'status' => 'unresolved',
         ]);
 
         Mail::send('emails.contact_notification', ['contact' => $contact], function ($message) {
             $message->to('tukaburu13@gmail.com')
-                    ->subject('新しいお問い合わせがありました');
+                ->subject('新しいお問い合わせがありました');
         });
 
         return redirect()->back()->with('contact_success', 'Your enquiry was successfully submitted.');
@@ -62,7 +62,7 @@ class ContactController extends Controller
         }
 
         $contact = $query->paginate(10);
-        
+
         return view('admin.contact', compact('contact'));
     }
 
@@ -77,7 +77,7 @@ class ContactController extends Controller
         $contact->status = $request->status;
         $contact->save();
 
-        return redirect()->route('admin.contact')->with('success', 'ステータスが更新されました');
+        return redirect()->route('admin.contactDetail', ['id' => $id])->with('success', 'ステータスが更新されました');
     }
 
     // 管理者のdashboardでstatusが「未対応」と「対応中」のものだけ表示
@@ -91,8 +91,13 @@ class ContactController extends Controller
             $query->whereIn('status', ['unresolved', 'in_progress']);
         }
 
-        $contact = $query->get();
+        return $query->get();
+    }
 
-        return view('admin.dashboard', compact('contact'));
+    // お問い合わせ詳細ページ
+    public function showDetail($id)
+    {
+        $contact = Contact::findOrFail($id);
+        return view('admin.contact_detail', compact('contact'));
     }
 }

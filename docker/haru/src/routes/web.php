@@ -1,15 +1,14 @@
 <?php
 
 use App\Http\Controllers\AdminBlogController;
+use App\Http\Controllers\AdminCalendarController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\GoogleCalendarController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-
 
 
 
@@ -42,19 +41,7 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 
     // 予約ページ
-    Route::get('/admin/dashboard', [GoogleCalendarController::class, 'index'])->name('admin.dashboard');
-
-    // カレンダーの日付を取得
-    Route::get('/get-calendar-date', [GoogleCalendarController::class, 'getCalendarDate'])->name('get.calendar.date');
-
-    // Google OAuth ルート
-    Route::get('/google-auth', [GoogleCalendarController::class, 'redirectToGoogle'])->name('google.auth');
-    // リダイレクト URI の修正
-    Route::get('/google/callback', [GoogleCalendarController::class, 'callback'])->name('google.callback');
-
-
-
-
+    Route::get('/admin/calendar', [AdminCalendarController::class, 'index'])->name('admin.calendar');
 
     // 管理者ブログ作成
     Route::get('admin/blog/create', [AdminBlogController::class, 'create'])->name('admin.blog.create');
@@ -79,15 +66,15 @@ Route::middleware('admin')->group(function () {
     // お問い合わせページ
     Route::get('/admin/contact', [ContactController::class, 'index'])->name('admin.contact');
 
+    // お問い合わせ詳細ページ
+    Route::get('admin/contact/{id}', [ContactController::class, 'showDetail'])->name('admin.contactDetail');
+
     // ステータスの更新管理
     Route::post('/admin/contact/{id}', [ContactController::class, 'updateStatus'])->name('updateStatus');
-
-    Route::get('/admin/dashboard', [ContactController::class, 'dashboard'])->name('admin.dashboard');
 });
 
 // コメントの保存
 Route::post('/blogs/{blog}/comments', [CommentController::class, 'store'])->name('comments.store');
-
 
 // ユーザー用ルート
 
@@ -108,6 +95,3 @@ Route::post('/admin/contact', [ContactController::class, 'store'])->name('contac
 
 // 予約ページ
 Route::get('/reservation', [ReservationController::class, 'index'])->name('user.reservation');
-
-// カレンダーの日付を取得
-Route::get('/get-calendar-date', [ReservationController::class, 'getCalendarDate'])->name('get.calendar.date');
