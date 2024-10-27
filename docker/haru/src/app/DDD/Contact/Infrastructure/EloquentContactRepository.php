@@ -6,6 +6,7 @@ use App\DDD\Contact\Domain\Entities\Contact as ContactEntity;
 use App\DDD\Contact\Domain\Repositories\ContactRepositoryInterface;
 use App\DDD\Contact\Domain\ValueObject\Email;
 use App\Models\Contact;
+use DateTime;
 
 class EloquentContactRepository implements ContactRepositoryInterface
 {
@@ -34,7 +35,8 @@ class EloquentContactRepository implements ContactRepositoryInterface
       $contactModel->name,
       new Email($contactModel->email),
       $contactModel->message,
-      $contactModel->status
+      $contactModel->status,
+      new DateTime($contactModel->created_at)
     );
   }
 
@@ -68,5 +70,14 @@ class EloquentContactRepository implements ContactRepositoryInterface
   public function filterByStatus(array $statuses)
   {
     return Contact::whereIn('status', $statuses)->get();
+  }
+
+  public function deleteById(string $id)
+  {
+    $contact = Contact::find($id);
+
+    if ($contact) {
+      $contact->delete();
+    }
   }
 }

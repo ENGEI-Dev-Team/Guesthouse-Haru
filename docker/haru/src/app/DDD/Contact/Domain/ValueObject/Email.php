@@ -32,4 +32,9 @@ class Email
   {
     return $this->email;
   }
+
+  public function __toString()
+    {
+        return $this->email;
+    }
 }

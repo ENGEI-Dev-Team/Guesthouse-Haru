@@ -3,6 +3,7 @@
 namespace App\DDD\Contact\Domain\Entities;
 
 use App\DDD\Contact\Domain\ValueObject\Email;
+use DateTime;
 use InvalidArgumentException;
 
 class Contact
@@ -12,14 +13,16 @@ class Contact
   private Email $email;
   private string $message;
   private string $status;
+  private $createdAt;
 
-  public function __construct(string $id, string $name, Email $email, string $message, string $status = 'unresolved')
+  public function __construct(string $id, string $name, Email $email, string $message, string $status = 'unresolved', DateTime $createdAt)
   {
     $this->id = $id;
     $this->name = $name;
     $this->email = $email;
     $this->message = $message;
     $this->setStatus($status);
+    $this->createdAt = $createdAt;
   }
 
   public function getId(): string
@@ -55,4 +58,9 @@ class Contact
     }
     $this->status = $status;
   }
+
+  public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
 }

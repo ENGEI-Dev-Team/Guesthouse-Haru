@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\DDD\Contact\infrastructure\EloquentContactRepository;
 use Illuminate\Http\Request;
 use App\DDD\Contact\UseCase\CreateContactUseCase;
+use App\DDD\Contact\UseCase\deleteContactUseCase;
 use App\DDD\Contact\UseCase\FilterContactUseCase;
 use App\DDD\Contact\UseCase\UpdateContactStatusUseCase;
+
 
 class ContactController extends Controller
 {    
@@ -14,17 +16,20 @@ class ContactController extends Controller
     protected $createContactUseCase;
     protected $filterContactUseCase;
     protected $updateContactStatusUseCase;
+    protected $deleteContactUseCase;
 
     public function __construct(
         EloquentContactRepository $contactRepository,
         CreateContactUseCase $createContactUseCase,
         FilterContactUseCase $filterContactUseCase,
-        UpdateContactStatusUseCase $updateContactStatusUseCase
+        UpdateContactStatusUseCase $updateContactStatusUseCase,
+        DeleteContactUseCase $deleteContactUseCase
     ) {
         $this->contactRepository = $contactRepository;
         $this->createContactUseCase = $createContactUseCase;
         $this->filterContactUseCase = $filterContactUseCase;
         $this->updateContactStatusUseCase = $updateContactStatusUseCase;
+        $this->deleteContactUseCase = $deleteContactUseCase;
     }
 
     // ユーザーのお問い合わせフォーム
@@ -92,5 +97,16 @@ class ContactController extends Controller
     {
         $contact = $this->contactRepository->findById($id);
         return view('admin.contact_detail', compact('contact'));
+    }
+
+    // お問い合わせの削除
+    public function delete($id)
+    {
+        try {
+            $this->deleteContactUseCase->execute($id);
+            return redirect()->route('admin.contact')->with('delete-success', 'お問い合わせが削除されました');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.contact')->with('delete-error','削除に失敗しました');
+        }
     }
 }

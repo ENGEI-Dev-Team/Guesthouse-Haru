@@ -9,4 +9,5 @@ interface ContactRepositoryInterface
   public function findById(string $id): ?Contact;
   public function filterContact(array $filters);
   public function filterByStatus(array $statuses);
+  public function deleteById(string $id);
 }

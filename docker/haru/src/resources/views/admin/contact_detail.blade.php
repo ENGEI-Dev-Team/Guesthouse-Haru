@@ -14,32 +14,39 @@
     <table class="table">
       <tr>
         <th>名前</th>
-        <td>{{ $contact->name }}</td>
+        <td>{{ $contact->getName() }}</td>
       </tr>
       <tr>
         <th>メールアドレス</th>
-        <td><a href="mailto:{{ $contact->email }}">{{ $contact->email }}</a></td>
+        <td><a href="mailto:{{ $contact->getEmail() }}">{{ $contact->getEmail() }}</a></td>
       </tr>
       <tr>
         <th>メッセージ</th>
-        <td>{{ $contact->message }}</td>
+        <td>{{ $contact->getMessage() }}</td>
       </tr>
       <tr>
       <tr>
         <th>ステータス</th>
         <td>
-          <span style="color: {{ $contact->status == 'unresolved' ? 'red' : ($contact->status == 'in_progress' ? 'green' : 'blue') }}">
-            {{ $contact->status == 'unresolved' ? '未対応' : ($contact->status == 'in_progress' ? '対応中' : '完了') }}
+          <span style="color: {{ $contact->getStatus() == 'unresolved' ? 'red' : ($contact->getStatus() == 'in_progress' ? 'green' : 'blue') }}">
+            {{ $contact->getStatus() == 'unresolved' ? '未対応' : ($contact->getStatus() == 'in_progress' ? '対応中' : '完了') }}
           </span>
         </td>
       </tr>
 
       <tr>
         <th>日付</th>
-        <td>{{ $contact->created_at->format('Y-m-d') }}</td>
+        <td>{{ $contact->getCreatedAt()->format('Y-m-d') }}</td>
       </tr>
     </table>
-    <a href="javascript:history.back();" class="detail-link">戻る</a>
+    <div class="btn-action">
+      <a href="javascript:history.back();" class="detail-link">戻る</a>
+      <form action="{{ route('admin.contactDelete', $contact->getId()) }}" method="post" class="delete-form">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="detail-link delete-button">削除</button>
+      </form>
+    </div>
   </div>
 </section>
 @endsection

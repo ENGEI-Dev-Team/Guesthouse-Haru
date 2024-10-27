@@ -69,6 +69,9 @@ Route::middleware('admin')->group(function () {
     // お問い合わせ詳細ページ
     Route::get('admin/contact/{id}', [ContactController::class, 'showDetail'])->name('admin.contactDetail');
 
+    // お問い合わせ削除
+    Route::delete('/admin/contact/{id}', [ContactController::class, 'delete'])->name('admin.contactDelete');
+
     // ステータスの更新管理
     Route::post('/admin/contact/{id}', [ContactController::class, 'updateStatus'])->name('updateStatus');
 });
