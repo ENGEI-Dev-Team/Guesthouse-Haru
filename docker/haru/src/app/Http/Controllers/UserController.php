@@ -44,7 +44,7 @@ class UserController extends Controller
             $query->orderBy('created_at', 'desc');
         }
 
-        $blogs = $query->with('categories')->get();
+        $blogs = $query->with('categories')->paginate(10);
 
         $categories = Category::all();
 

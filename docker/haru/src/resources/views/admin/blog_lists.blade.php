@@ -9,7 +9,9 @@
 @section('content')
 <section class="blogs-filter">
   <div class="inner">
-    <h2 class="section-title">Blog lists</h2>
+    <div class="section-title">
+    <h2>Blog lists</h2>
+    </div>
     <form action="{{ route('admin.blogLists') }}" method="get" class="filter-form">
       <div class="form-group">
         <input type="text" name="keyword" id="keyword" value="{{ request('keyword') }}" placeholder="Keyword...">
@@ -65,6 +67,10 @@
         </div>
       </a>
       @endforeach
+    </div>
+    <!-- ページネーションリンク -->
+    <div class="pagination">
+      {{ $blogs->links('pagination::bootstrap-4') }}
     </div>
   </div>
 </section>

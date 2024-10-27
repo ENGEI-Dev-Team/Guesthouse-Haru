@@ -3,14 +3,14 @@
 @section('title', 'ブログ詳細ページ')
 
 @section('styles')
-<link rel="stylesheet" href="{{ asset('css/detail.css') }}">
+<link rel="stylesheet" href="{{ asset('css/style.css') }}">
 <link rel="stylesheet" href="{{ asset('css/blog_detail.css') }}">
 @endsection
 
 @section('content')
 <section class="blog-detail">
   <div class="inner">
-    <section class="blog-container">
+    <div class="blog-container">
       @if (session('blog_success'))
       <div class="alert alert-success">
         {{ session('blog_success') }}
@@ -33,9 +33,9 @@
         <p class="blog-content">{{ $blog->content }}</p>
         <p class="blog-date">{{ $blog->created_at->format('F d, Y') }}</p>
       </div>
-    </section>
+    </div>
 
-    <section class="comments">
+    <div class="comments">
       <div class="comment-post">
         <h4 class="comment-title">Comment this post</h4>
         <form action="{{ route('comments.store', $blog->id) }}" method="post" class="comment-form">
@@ -51,9 +51,9 @@
           <button type="submit">Submit</button>
         </form>
       </div>
-    </section>
+    </div>
 
-    <section class="comments">
+    <div class="comments">
       @if (session('comment_success'))
       <div class="alert alert-success">
         {{ session('comment_success') }}
@@ -77,7 +77,7 @@
           @endforelse
         </ul>
       </div>
-    </section>
+    </div>
   </div>
 </section>
 @endsection
