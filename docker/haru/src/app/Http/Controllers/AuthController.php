@@ -2,12 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admin;
+use App\DDD\Auth\Domain\ValueObject\Password;
+use App\DDD\Auth\UseCase\loginAdminUseCase;
+use App\DDD\Auth\UseCase\RegisterAdminUseCase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    private $registerAdminUseCase;
+    private $loginAdminUseCase;
+
+    public function __construct(RegisterAdminUseCase $registerAdminUseCase, loginAdminUseCase $loginAdminUseCase)
+    {
+        $this->registerAdminUseCase = $registerAdminUseCase;
+        $this->loginAdminUseCase = $loginAdminUseCase;
+    }
+
     // 新規登録フォームを表示
     public function showRegisterForm()
     {
@@ -20,23 +31,25 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:admins',
-            'password' => 'required|string|min:6|max:255|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/'
+            'password' => 'required|string|min:6|max:255'
         ], [
             'name.required' => 'Nameの入力がありません',
             'email.required' => 'Emailの入力がありません',
             'email.unique' => 'このEmailはすでに使用されています',
             'password.required' => 'Passwordの入力がありません',
-            'password.min' => 'Passwordは6文字以上である必要があります',
-            'password.regex' => 'Passwordには小文字、大文字、数字を含める必要があります',
+            'password.min' => 'Passwordは6文字以上である必要があります', 
         ]);
 
-        Admin::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password,
-        ]);
+        try {
+            $passwordValueObject = new Password($request->password);
 
-        return redirect()->route('admin.login');
+            $this->registerAdminUseCase->execute($request->name, $request->email, $passwordValueObject);
+            return redirect()->route('admin.login');
+        } catch (\InvalidArgumentException $e) {
+            return back()->withErrors(['error' => $e->getMessage()]);
+        } catch (\exception $e) {
+            return back()->withErrors(['error' => '登録に失敗しました']);
+        }
     }
 
     // ログインフォームを表示
@@ -58,11 +71,10 @@ class AuthController extends Controller
             'password.regex' => 'Passwordには小文字、大文字、数字を含める必要があります',
         ]);
 
-        $loginData = $request->only('email', 'password');
-
-        if (Auth::guard('admin')->attempt($loginData)) {
+        if ($this->loginAdminUseCase->execute($request->email, $request->password)) {
             return redirect()->intended('/admin/dashboard');
         }
+
         return back()->withErrors([
             'email' => 'ログイン情報が正しくありません',
         ]);
