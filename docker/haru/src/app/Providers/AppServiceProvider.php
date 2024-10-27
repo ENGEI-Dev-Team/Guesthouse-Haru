@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\DDD\Comment\Domain\Repository\CommentRepositoryInterface;
+use App\DDD\Comment\Infrastructure\CommentRepository;
 use Illuminate\Support\ServiceProvider;
 use App\DDD\Contact\Domain\Repositories\ContactRepositoryInterface;
 use App\DDD\Contact\infrastructure\EloquentContactRepository as InfrastructureEloquentContactRepository;
-use App\DDD\Contact\Infrastructure\Repositories\EloquentContactRepository;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(ContactRepositoryInterface::class, InfrastructureEloquentContactRepository::class);
+        $this->app->bind(CommentRepositoryInterface::class, CommentRepository::class);
     }
 
     /**
