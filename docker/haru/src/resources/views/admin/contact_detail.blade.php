@@ -10,6 +10,15 @@
 @section('content')
 <section class="contact-detail">
   <div class="inner">
+    @if (session('success'))
+    <div class="alert alert-success">
+      {{ session('success') }}
+    </div>
+    <div class="alert alert-error">
+      {{ session('error') }}
+    </div>
+    @endif
+
     <h2 class="section-title">お問い合わせ詳細</h2>
     <table class="table">
       <tr>

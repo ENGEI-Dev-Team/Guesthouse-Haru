@@ -104,9 +104,9 @@ class ContactController extends Controller
     {
         try {
             $this->deleteContactUseCase->execute($id);
-            return redirect()->route('admin.contact')->with('delete-success', 'お問い合わせが削除されました');
+            return redirect()->route('admin.contact')->with('success', 'お問い合わせが削除されました');
         } catch (\Exception $e) {
-            return redirect()->route('admin.contact')->with('delete-error','削除に失敗しました');
+            return redirect()->route('admin.contact')->with('error','削除に失敗しました');
         }
     }
 }
