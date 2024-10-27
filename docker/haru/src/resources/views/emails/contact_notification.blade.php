@@ -9,9 +9,9 @@
 
 <body>
   <h1>新しいお問い合わせがあります</h1>
-  <p><strong>名前:</strong> {{ $contact->name }}</p>
-  <p><strong>メールアドレス:</strong> {{ $contact->email }}</p>
-  <p><strong>メッセージ:</strong> {{ $contact->message }}</p>
+  <p><strong>名前:</strong> {{ $contact->getName() }}</p>
+  <p><strong>メールアドレス:</strong> {{ $contact->getEmail()->getValue() }}</p>
+  <p><strong>メッセージ:</strong> {{ $contact->getMessage() }}</p>
 </body>
 
 </html>
