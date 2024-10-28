@@ -9,17 +9,17 @@
 
 @section('content')
 <section class="create-blog">
-  @if ($errors->any())
-  <div class="error-message">
-    <ul>
-      @foreach ($errors->all() as $error)
-      <li>{{ $error }}</li>
-      @endforeach
-    </ul>
-  </div>
-  @endif
-
   <div class="inner">
+    @if ($errors->any())
+    <div class="error-message">
+      <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    </div>
+    @endif
+
     <h2 class="section-title">ブログ作成</h2>
     <form action="{{ route('admin.blog.store') }}" method="post" enctype="multipart/form-data">
       @csrf
@@ -32,7 +32,6 @@
         <label for="category">カテゴリー:</label>
         <div class="category-select">
           <select name="categories[]" id="category" multiple class="select">
-
             @foreach ($categories as $category)
             <option value="{{ $category->id }}">{{ $category->name }}</option>
             @endforeach
@@ -59,7 +58,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script>
-$(document).ready(function() {
+  $(document).ready(function() {
     $('.select').select2({
       multiple: true,
       placeholder: "カテゴリを選択 (複数可)",
