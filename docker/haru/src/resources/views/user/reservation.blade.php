@@ -8,12 +8,12 @@
 @endsection
 
 @section('content')
-<section class="top-section">
-  <img src="{{ asset('images/teshima5.jpg') }}" alt="豊島の風景" class="top-image">
+<div class="top-image">
+  <img src="{{ asset('images/teshima5.jpg') }}" alt="豊島の風景">
   <div class="top-texts">
     <h3 class="top-title animated-text">Welcome to Haru.</h3>
   </div>
-</section>
+</div>
 
 <section class="reservation-calendar">
   <div class="inner">
@@ -85,7 +85,6 @@
   </div>
 </section>
 
-
 <div id="overlay" class="overlay"></div>
 <div id="infoModal" class="modal">
   <div class="modal-content">
@@ -122,8 +121,6 @@
     </div>
   </div>
 </div>
-
-
 @endsection
 
 @section('scripts')
@@ -164,7 +161,6 @@
 
       closeButton.addEventListener('click',closeModal); 
       overlay.addEventListener('click', closeModal);
-
 
       confirmCheck.addEventListener('change', function() {
         if (confirmCheck.checked) {
