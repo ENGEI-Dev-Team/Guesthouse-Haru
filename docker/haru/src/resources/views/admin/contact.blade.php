@@ -72,17 +72,17 @@
       </thead>
       <tbody>
         @foreach ($contact as $request)
-        <tr>
+        <tr style="cursor: pointer;" onclick="location.href='{{ route('admin.contactDetail', $request->id) }}'">
           <td>{{ $request->name }}</td>
           <!-- メール送信機能 -->
           <td><a href="mailto:{{ $request->email }}?subject=Inquiry&body=Thank you for your inquiry." class="email-link">{{ $request->email }}</a>
           </td>
-          <td>{{ $request->message }}</td>
-          <td>{{ $request->created_at }}</td>
+          <td>{{ Str::limit($request->message, 50, '...') }}</td>
+          <td>{{ $request->created_at->format('Y-m-d')  }}</td>
           <td>
             <form action="{{ route('updateStatus', $request->id) }}" method="post">
               @csrf
-              <select name="status" id="status" onchange="this.form.submit()" style="color: {{ $request->status == 'unresolved' ? 'red' : ($request->status == 'in_progress' ? 'green' : 'blue') }}">
+              <select name="status" id="status" onchange="this.form.submit()" style="color: {{ $request->status == 'unresolved' ? 'red' : ($request->status == 'in_progress' ? 'green' : 'blue') }}" onclick="event.stopPropagation();">
                 <option value="unresolved" {{ $request->status == 'unresolved' ? 'selected' : '' }}>未対応</option>
                 <option value="in_progress" {{ $request->status == 'in_progress' ? 'selected' : '' }}>対応中</option>
                 <option value="resolved" {{ $request->status == 'resolved' ? 'selected' : '' }}>完了</option>
