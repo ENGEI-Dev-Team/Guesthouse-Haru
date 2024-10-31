@@ -62,5 +62,9 @@
       </a>
       @endforeach
     </div>
+    <!-- ページネーションリンク -->
+    <div class="pagination">
+      {{ $blogs->links('pagination::bootstrap-4') }}
+    </div>
   </div>
 </section>

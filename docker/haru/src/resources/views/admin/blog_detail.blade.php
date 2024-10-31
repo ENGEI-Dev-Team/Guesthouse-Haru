@@ -10,7 +10,7 @@
 @section('content')
 <section class="blog-detail">
   <div class="inner">
-    <section class="blog-container">
+    <div class="blog-container">
       @if (session('update_success'))
       <div class="alert alert-success">
         {{ session('update_success') }}
@@ -47,9 +47,9 @@
           </form>
         </div>
       </div>
-    </section>
+    </div>
 
-    <section class="comments">
+    <div class="comments">
       <div class="comment-post">
         <h4 class="comment-title">Comment this post</h4>
         <form action="{{ route('comments.store', $blog->id) }}" method="post" class="comment-form">
@@ -65,9 +65,9 @@
           <button type="submit">Submit</button>
         </form>
       </div>
-    </section>
+    </div>
 
-    <section class="comments">
+    <div class="comments">
     @if (session('comment_success'))
       <div class="alert alert-success">
         {{ session('comment_success') }}
@@ -96,7 +96,7 @@
           @endforelse
         </ul>
       </div>
-    </section>
+    </div>
   </div>
 </section>
 @endsection
