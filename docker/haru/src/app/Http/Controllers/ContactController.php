@@ -8,7 +8,7 @@ use App\DDD\Contact\UseCase\CreateContactUseCase;
 use App\DDD\Contact\UseCase\deleteContactUseCase;
 use App\DDD\Contact\UseCase\FilterContactUseCase;
 use App\DDD\Contact\UseCase\UpdateContactStatusUseCase;
-
+use App\Http\Requests\StoreContactRequest;
 
 class ContactController extends Controller
 {    
@@ -33,20 +33,10 @@ class ContactController extends Controller
     }
 
     // ユーザーのお問い合わせフォーム
-    public function store(Request $request)
+    public function store(StoreContactRequest $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255',
-            'message' => 'required|max:5000',
-        ], [
-            'name.required' => 'Please enter your name',
-            'email.required' => 'Please enter your email',
-            'message.required' => 'Please enter message',
-        ]);
-
         try {
-            $this->createContactUseCase->execute($validatedData);
+            $this->createContactUseCase->execute($request->validated());
             return redirect()->back()->with('contact_success', 'Your enquiry was successfully submitted.');
         } catch (\Exception $e) {
             return redirect()->back()->with('contact_error', 'An error occurred while submitting your enquiry: ' . $e->getMessage());
@@ -66,10 +56,6 @@ class ContactController extends Controller
     // ステータスの更新管理
     public function updateStatus(Request $request, $id)
     {
-        $request->validate([
-            'status' => 'required|in:unresolved,in_progress,resolved'
-        ]);
-
         try {
             $this->updateContactStatusUseCase->execute($id, $request->input('status'));
             return redirect()->route('admin.contactDetail', ['id' => $id])->with('success', 'ステータスが更新されました');
