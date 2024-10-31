@@ -2,12 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Contact;
+use App\DDD\Contact\infrastructure\EloquentContactRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
+use App\DDD\Contact\UseCase\CreateContactUseCase;
+use App\DDD\Contact\UseCase\deleteContactUseCase;
+use App\DDD\Contact\UseCase\FilterContactUseCase;
+use App\DDD\Contact\UseCase\UpdateContactStatusUseCase;
+
 
 class ContactController extends Controller
-{
+{    
+    protected $contactRepository;
+    protected $createContactUseCase;
+    protected $filterContactUseCase;
+    protected $updateContactStatusUseCase;
+    protected $deleteContactUseCase;
+
+    public function __construct(
+        EloquentContactRepository $contactRepository,
+        CreateContactUseCase $createContactUseCase,
+        FilterContactUseCase $filterContactUseCase,
+        UpdateContactStatusUseCase $updateContactStatusUseCase,
+        DeleteContactUseCase $deleteContactUseCase
+    ) {
+        $this->contactRepository = $contactRepository;
+        $this->createContactUseCase = $createContactUseCase;
+        $this->filterContactUseCase = $filterContactUseCase;
+        $this->updateContactStatusUseCase = $updateContactStatusUseCase;
+        $this->deleteContactUseCase = $deleteContactUseCase;
+    }
+
     // ユーザーのお問い合わせフォーム
     public function store(Request $request)
     {
@@ -21,47 +45,20 @@ class ContactController extends Controller
             'message.required' => 'Please enter message',
         ]);
 
-        $contact = Contact::create([
-            'name' => $validatedData['name'],
-            'email' => $validatedData['email'],
-            'message' => $validatedData['message'],'status' => 'unresolved',
-        ]);
-
-        Mail::send('emails.contact_notification', ['contact' => $contact], function ($message) {
-            $message->to('tukaburu13@gmail.com')
-                ->subject('新しいお問い合わせがありました');
-        });
-
-        return redirect()->back()->with('contact_success', 'Your enquiry was successfully submitted.');
+        try {
+            $this->createContactUseCase->execute($validatedData);
+            return redirect()->back()->with('contact_success', 'Your enquiry was successfully submitted.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('contact_error', 'An error occurred while submitting your enquiry: ' . $e->getMessage());
+        }
     }
 
     // 管理者のお問い合わせ管理ページ
     public function index(Request $request)
     {
-        $query = Contact::query();
+        $filters = $request->only(['name', 'email', 'message', 'status', 'date_from', 'date_to']);
 
-        if ($request->filled('name')) {
-            $query->where('name', 'like', '%' . $request->name . '%');
-        }
-
-
-        if ($request->filled('email')) {
-            $query->where('email', 'like', '%' . $request->email . '%');
-        }
-
-        if ($request->filled('status')) {
-            $query->where('status', $request->status);
-        }
-
-        if ($request->filled('date_from') && $request->filled('date_to')) {
-            $query->whereBetween('created_at', [$request->date_from, $request->date_to]);
-        }
-
-        if ($request->filled('message')) {
-            $query->where('message', 'like', '%' . $request->message . '%');
-        }
-
-        $contact = $query->paginate(10);
+        $contact = $this->filterContactUseCase->execute($filters);
 
         return view('admin.contact', compact('contact'));
     }
@@ -73,31 +70,43 @@ class ContactController extends Controller
             'status' => 'required|in:unresolved,in_progress,resolved'
         ]);
 
-        $contact = Contact::where('id', $id)->findOrFail($id);
-        $contact->status = $request->status;
-        $contact->save();
-
-        return redirect()->route('admin.contactDetail', ['id' => $id])->with('success', 'ステータスが更新されました');
+        try {
+            $this->updateContactStatusUseCase->execute($id, $request->input('status'));
+            return redirect()->route('admin.contactDetail', ['id' => $id])->with('success', 'ステータスが更新されました');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.contactDetail', ['id' => $id])->with('error', 'ステータスの更新中にエラーが発生しました: ' . $e->getMessage());
+        }
     }
 
     // 管理者のdashboardでstatusが「未対応」と「対応中」のものだけ表示
     public function dashboard(Request $request)
     {
-        $query = Contact::query();
+        $statuses = ['unresolved', 'in_progress'];
 
-        if ($request->filled('(status')) {
-            $query->where('status', $request->status);
-        } else {
-            $query->whereIn('status', ['unresolved', 'in_progress']);
+        if ($request->filled('status')) {
+            $statuses = [$request->status];
         }
 
-        return $query->get();
+        $contact = $this->contactRepository->filterByStatus($statuses);
+
+        return $contact;
     }
 
     // お問い合わせ詳細ページ
     public function showDetail($id)
     {
-        $contact = Contact::findOrFail($id);
+        $contact = $this->contactRepository->findById($id);
         return view('admin.contact_detail', compact('contact'));
+    }
+
+    // お問い合わせの削除
+    public function delete($id)
+    {
+        try {
+            $this->deleteContactUseCase->execute($id);
+            return redirect()->route('admin.contact')->with('success', 'お問い合わせが削除されました');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.contact')->with('error','削除に失敗しました');
+        }
     }
 }

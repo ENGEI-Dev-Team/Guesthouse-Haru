@@ -57,6 +57,9 @@
     <div class="alert alert-success">
       {{ session('success') }}
     </div>
+    <div class="alert alert-error">
+      {{ session('error') }}
+    </div>
     @endif
 
     <!-- お問い合わせ一覧 -->

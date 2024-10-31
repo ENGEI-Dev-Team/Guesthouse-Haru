@@ -2,29 +2,56 @@
 
 namespace App\Http\Controllers;
 
+use App\DDD\Contact\UseCase\CreateContactUseCase;
+use App\DDD\Contact\infrastructure\EloquentContactRepository;
+use App\DDD\Contact\UseCase\deleteContactUseCase;
+use App\DDD\Contact\UseCase\FilterContactUseCase;
+use App\DDD\Contact\UseCase\UpdateContactStatusUseCase;
 use App\Models\Blog;
-use App\Models\Category;
-use App\Models\Contact;
 use App\Http\Controllers\AdminCalendarController;
-
 use Illuminate\Http\Request;
+
 
 class AdminController extends Controller
 {
+    private $createContactUseCase;
+    private $filterContactUseCase;
+    private $updateContactStatusUseCase; 
+    private $contactRepository; 
+    private $deleteContactUseCase;
+
+
+    public function __construct(
+        EloquentContactRepository $contactRepository,
+        CreateContactUseCase $createContactUseCase, 
+        FilterContactUseCase $filterContactUseCase,
+        UpdateContactStatusUseCase $updateContactStatusUseCase,
+        DeleteContactUseCase $deleteContactUseCase
+    ) {
+        $this->contactRepository = $contactRepository; 
+        $this->createContactUseCase = $createContactUseCase;
+        $this->filterContactUseCase = $filterContactUseCase;
+        $this->updateContactStatusUseCase = $updateContactStatusUseCase;
+        $this->deleteContactUseCase = $deleteContactUseCase;
+    }
+
     public function index(Request $request)
     {
-        // 最新のブログを表示
         $latestBlogs = Blog::latest()->take(6)->get();
 
-        // ContactControllerのカレンダーデータを取得
-        $contactController = new ContactController();
+        $contactController = new ContactController(
+            $this->contactRepository,  
+            $this->createContactUseCase, 
+            $this->filterContactUseCase, 
+            $this->updateContactStatusUseCase,
+            $this->deleteContactUseCase
+        );
+
         $contact = $contactController->dashboard($request);
 
-       // AdminCalendarControllerのカレンダーデータを取得
         $calendarController = new AdminCalendarController();
-        $bookedDates = $calendarController->fetchEventData(); // イベントデータを取得
+        $bookedDates = $calendarController->fetchEventData(); 
 
         return view('admin.dashboard', compact('latestBlogs','contact', 'bookedDates'));
     }
 }
-
