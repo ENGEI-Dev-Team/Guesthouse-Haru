@@ -10,6 +10,16 @@
 @section('content')
 <section class="blog-detail">
   <div class="inner">
+    @if ($errors->any())
+    <div class="alert alert-danger">
+      <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    </div>
+    @endif
+    
     <div class="blog-container">
       @if (session('update_success'))
       <div class="alert alert-success">
@@ -68,7 +78,7 @@
     </div>
 
     <div class="comments">
-    @if (session('comment_success'))
+      @if (session('comment_success'))
       <div class="alert alert-success">
         {{ session('comment_success') }}
       </div>

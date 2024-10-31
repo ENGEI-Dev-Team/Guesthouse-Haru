@@ -2,23 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use App\DDD\Blog\UseCase\CreateBlogUseCase;
+use App\DDD\Blog\UseCase\GetBlogsUseCase;
+use App\DDD\Blog\UseCase\UpdateBlogUseCase;
 use App\Models\Blog;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
+
 
 class AdminBlogController extends Controller
 {
+    private $createBlogUseCase;
+    private $getBlogsUseCase;
+    private $updateBlogUseCase;
+
+    public function __construct(CreateBlogUseCase $createBlogUseCase, GetBlogsUseCase $getBlogsUseCase, UpdateBlogUseCase $updateBlogUseCase)
+    {
+        $this->createBlogUseCase = $createBlogUseCase;
+        $this->getBlogsUseCase = $getBlogsUseCase;
+        $this->updateBlogUseCase = $updateBlogUseCase;
+    }
+
     // ブログ作成
     public function create()
     {
         $categories = Category::all();
         return view('admin.create_blog', compact('categories'));
     }
-
 
     // ブログ保存
     public function store(Request $request)
@@ -39,24 +51,20 @@ class AdminBlogController extends Controller
         ]);
 
         // 画像のアップロード
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('images/blogs', 'public');
-        } else {
+        if (!$request->hasFile('image')) {
             return back()->withErrors(['image' => '画像がアップロードされていません。'])->withInput();
         }
+        $imagePath = $request->file('image')->store('images/blogs', 'public');
 
         $adminId = Auth::guard('admin')->id();
 
-        $blog = Blog::create([
-            'id' => (string) Str::uuid(),
-            'admin_id' => $adminId,
-            'title' => $validatedData['title'],
-            'content' => $validatedData['content'],
-            'image' => $imagePath,
-        ]);
-
-        // カテゴリを関連付け
-        $blog->categories()->sync($validatedData['categories']);
+        $this->createBlogUseCase->execute(
+            $adminId, 
+            $validatedData['title'], 
+            $validatedData['content'], 
+            $imagePath,  
+            $validatedData['categories']
+        );
 
         return redirect()->route('admin.blogLists')->with('create_success', 'ブログが作成されました。');
     }
@@ -64,33 +72,8 @@ class AdminBlogController extends Controller
     // ブログ一覧ページ
     public function blogLists(Request $request)
     {
-        $query = Blog::query();
-
-        // キーワード検索
-        if ($request->has('keyword') && !empty($request->input('keyword'))) {
-            $query->where('title', 'like', '%' . $request->input('keyword') . '%')
-                ->orWhere('content', 'like', '%' . $request->input('keyword') . '%');
-        }
-
-        // カテゴリー検索
-        if ($request->has('category') && !empty($request->input('category'))) {
-            $query->whereHas('categories', function ($categoryQuery) use ($request) {
-                $categoryQuery->where('category_id', $request->input('category'));
-            });
-        }
-
-        // 並び順
-        if ($request->has('order')) {
-            if ($request->input('order') === 'newest') {
-                $query->orderBy('created_at', 'desc');
-            } else if ($request->input('order') === 'oldest') {
-                $query->orderBy('created_at', 'asc');
-            }
-        } else {
-            $query->orderBy('created_at', 'desc');
-        }
-
-        $blogs = $query->with('categories')->paginate(10);
+        $filters = $request->only(['keyword', 'category', 'order']);
+        $blogs = $this->getBlogsUseCase->execute($filters);
 
         $categories = Category::all();
 
@@ -111,13 +94,27 @@ class AdminBlogController extends Controller
         return view('admin.blog_edit', compact('blog', 'categories'));
     }
 
+    public function updateImage(Request $request, Blog $blog): ?string
+    {
+        if (!$request->hasFile('image')) {
+            return null;
+        }
+
+        $existingImagePath = $blog->getImagePath();
+        if ($existingImagePath) {
+            Storage::delete($existingImagePath);
+        }
+
+        return $request->file('image')->store('images/blogs', 'public');
+    }
+
     public function update(Request $request, Blog $blog)
     {
         $validatedData = $request->validate([
             'image' => 'image|mimes:jpeg,png,jpg,webp',
             'title' => 'required|string|max:255',
             'content' => 'required|string|',
-            'categories' => 'required|array'
+            'categories' => 'required|array|min:1'
         ], [
             'image.image' => '画像は画像ファイルである必要があります。',
             'image.mimes' => '画像はjpeg、png、jpg、またはwebp形式である必要があります。',
@@ -125,25 +122,26 @@ class AdminBlogController extends Controller
             'title.max' => 'タイトルは255文字以内でなければなりません。',
             'content.required' => '内容を入力してください。',
             'categories.required' => '少なくとも1つのカテゴリを選択してください。',
+            'categories.min' => '少なくとも1つのカテゴリを選択してください。',
         ]);
 
-        if ($request->hasFile('image')) {
-            if ($blog->image) {
-                Storage::delete($blog->image);
-            }
+        $imagePath = $this->updateImage($request, $blog);
 
-            $imagePath = $request->file('image')->store('images/blogs', 'public');
-            $blog->update(['image' => $imagePath]);
-        }
-
-        $blog->update([
-            'title' => $validatedData['title'],
-            'content' => $validatedData['content'],
-        ]);
+        try {
+            $this->updateBlogUseCase->execute(
+                $blog->id,
+                $validatedData['title'],
+                $validatedData['content'],
+                $imagePath ?? $blog->getImagePath(),
+                $validatedData['categories']
+            );
 
             $blog->categories()->sync($validatedData['categories']);
 
             return redirect()->route('admin.blogDetail', ['id' => $blog->id])->with('update_success', 'ブログを更新しました。');
+        } catch (\Exception $e) {
+            return back()->withErrors(['update_error' => $e->getMessage()]);
+        }
     }
 
     // ブログ削除
