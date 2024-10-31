@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class loginAdminUseCase
 {
-  public function execute($email, $password)
+  public function execute($email, $password):bool
   {
     $passwordValueObject = new Password($password);
     $loginData = [

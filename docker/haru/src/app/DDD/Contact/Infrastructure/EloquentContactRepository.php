@@ -10,7 +10,7 @@ use DateTime;
 
 class EloquentContactRepository implements ContactRepositoryInterface
 {
-  public function save(ContactEntity $contact)
+  public function save(ContactEntity $contact): void
   {
     $contactModel = new Contact();
 
@@ -72,7 +72,7 @@ class EloquentContactRepository implements ContactRepositoryInterface
     return Contact::whereIn('status', $statuses)->get();
   }
 
-  public function deleteById(string $id)
+  public function deleteById(string $id): void
   {
     $contact = Contact::find($id);
 

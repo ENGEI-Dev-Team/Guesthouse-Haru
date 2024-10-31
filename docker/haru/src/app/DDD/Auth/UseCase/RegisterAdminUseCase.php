@@ -14,7 +14,7 @@ class RegisterAdminUseCase
     $this->adminRepository = $adminRepository;
   }
 
-  public function execute($name, $email, $password)
+  public function execute($name, $email, $password): void
   {
     $passwordValueObject = new Password($password);
     $admin = new Admin($name, $email, $passwordValueObject);

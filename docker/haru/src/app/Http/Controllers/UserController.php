@@ -31,11 +31,11 @@ class UserController extends Controller
 
         $categories = Category::all();
 
-        return view('admin.blog_lists', ['blogs' => $blogs, 'categories' => $categories]);
+        return view('user.blog_lists', ['blogs' => $blogs, 'categories' => $categories]);
     }
 
     // ブログ詳細ページ
-    public function blogDetail($id)
+    public function blogDetail(string $id)
     {
         $blog = Blog::with('comments')->findOrFail($id);
         return view('user.blog_detail', compact('blog'));

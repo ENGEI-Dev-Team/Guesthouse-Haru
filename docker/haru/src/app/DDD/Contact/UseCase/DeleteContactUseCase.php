@@ -12,7 +12,7 @@ class deleteContactUseCase
     $this->contactRepository = $contactRepository;
   }
 
-  public function execute(string $id)
+  public function execute(string $id): void
   {
     $this->contactRepository->DeleteById($id);
   }

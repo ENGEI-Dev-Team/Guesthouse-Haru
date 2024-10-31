@@ -79,14 +79,14 @@ class ContactController extends Controller
     }
 
     // お問い合わせ詳細ページ
-    public function showDetail($id)
+    public function showDetail(string $id)
     {
         $contact = $this->contactRepository->findById($id);
         return view('admin.contact_detail', compact('contact'));
     }
 
     // お問い合わせの削除
-    public function delete($id)
+    public function delete(string $id)
     {
         try {
             $this->deleteContactUseCase->execute($id);

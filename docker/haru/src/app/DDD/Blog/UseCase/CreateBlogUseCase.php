@@ -14,7 +14,7 @@ class CreateBlogUseCase
     $this->blogRepository = $blogRepository;
   }
 
-  public function execute(string $adminId, String $title, string $content, string $imagePath, array $categoryIds)
+  public function execute(string $adminId, String $title, string $content, string $imagePath, array $categoryIds): void
   {
     $blogEntity = new BlogEntity(
       null,

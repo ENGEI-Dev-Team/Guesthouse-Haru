@@ -67,7 +67,7 @@ class AdminBlogController extends Controller
     }
 
     // ブログ詳細ページ
-    public function blogDetail($id)
+    public function blogDetail(string $id)
     {
         $blog = Blog::with('comments')->findOrFail($id);
         return view('admin.blog_detail', compact('blog'));
