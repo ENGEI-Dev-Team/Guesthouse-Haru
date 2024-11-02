@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\DDD\Blog\UseCase\CreateBlogUseCase;
 use App\DDD\Blog\UseCase\GetBlogsUseCase;
 use App\DDD\Blog\UseCase\UpdateBlogUseCase;
+use App\Http\Requests\StoreBlogRequest;
+use App\Http\Requests\UpdateBlogRequest;
 use App\Models\Blog;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-
 
 class AdminBlogController extends Controller
 {
@@ -33,23 +34,8 @@ class AdminBlogController extends Controller
     }
 
     // ブログ保存
-    public function store(Request $request)
+    public function store(StoreBlogRequest $request)
     {
-        $validatedData = $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,webp',
-            'title' => 'required|string|max:255',
-            'content' => 'required|string|',
-            'categories' => 'required|array'
-        ], [
-            'image.required' => '画像を挿入してください',
-            'image.image' => '画像は画像ファイルである必要があります。',
-            'image.mimes' => '画像はjpeg、png、jpg、またはwebp形式である必要があります。',
-            'title.required' => 'タイトルを入力してください。',
-            'title.max' => 'タイトルは255文字以内でなければなりません。',
-            'content.required' => '内容を入力してください。',
-            'categories.required' => '少なくとも1つのカテゴリを選択してください。',
-        ]);
-
         // 画像のアップロード
         if (!$request->hasFile('image')) {
             return back()->withErrors(['image' => '画像がアップロードされていません。'])->withInput();
@@ -60,10 +46,10 @@ class AdminBlogController extends Controller
 
         $this->createBlogUseCase->execute(
             $adminId, 
-            $validatedData['title'], 
-            $validatedData['content'], 
+            $request['title'], 
+            $request['content'], 
             $imagePath,  
-            $validatedData['categories']
+            $request['categories']
         );
 
         return redirect()->route('admin.blogLists')->with('create_success', 'ブログが作成されました。');
@@ -108,35 +94,20 @@ class AdminBlogController extends Controller
         return $request->file('image')->store('images/blogs', 'public');
     }
 
-    public function update(Request $request, Blog $blog)
+    public function update(UpdateBlogRequest $request, Blog $blog)
     {
-        $validatedData = $request->validate([
-            'image' => 'image|mimes:jpeg,png,jpg,webp',
-            'title' => 'required|string|max:255',
-            'content' => 'required|string|',
-            'categories' => 'required|array|min:1'
-        ], [
-            'image.image' => '画像は画像ファイルである必要があります。',
-            'image.mimes' => '画像はjpeg、png、jpg、またはwebp形式である必要があります。',
-            'title.required' => 'タイトルを入力してください。',
-            'title.max' => 'タイトルは255文字以内でなければなりません。',
-            'content.required' => '内容を入力してください。',
-            'categories.required' => '少なくとも1つのカテゴリを選択してください。',
-            'categories.min' => '少なくとも1つのカテゴリを選択してください。',
-        ]);
-
         $imagePath = $this->updateImage($request, $blog);
 
         try {
             $this->updateBlogUseCase->execute(
                 $blog->id,
-                $validatedData['title'],
-                $validatedData['content'],
+                $request['title'],
+                $request['content'],
                 $imagePath ?? $blog->getImagePath(),
-                $validatedData['categories']
+                $request['categories']
             );
 
-            $blog->categories()->sync($validatedData['categories']);
+            $blog->categories()->sync($request['categories']);
 
             return redirect()->route('admin.blogDetail', ['id' => $blog->id])->with('update_success', 'ブログを更新しました。');
         } catch (\Exception $e) {

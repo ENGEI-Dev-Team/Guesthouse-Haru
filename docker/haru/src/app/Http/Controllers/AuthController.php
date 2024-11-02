@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\DDD\Auth\Domain\ValueObject\Password;
 use App\DDD\Auth\UseCase\loginAdminUseCase;
 use App\DDD\Auth\UseCase\RegisterAdminUseCase;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,20 +28,8 @@ class AuthController extends Controller
     }
 
     // 登録処理
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:admins',
-            'password' => 'required|string|min:6|max:255'
-        ], [
-            'name.required' => 'Nameの入力がありません',
-            'email.required' => 'Emailの入力がありません',
-            'email.unique' => 'このEmailはすでに使用されています',
-            'password.required' => 'Passwordの入力がありません',
-            'password.min' => 'Passwordは6文字以上である必要があります', 
-        ]);
-
         try {
             $passwordValueObject = new Password($request->password);
 
@@ -59,18 +49,8 @@ class AuthController extends Controller
     }
 
     // ログイン処理
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $request->validate([
-            'email' => 'required|email|max:255',
-            'password' => 'required|string|min:6|max:255|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/'
-        ], [
-            'email.required' => 'Emailの入力がありません',
-            'password.required' => 'Passwordの入力がありません',
-            'password.min' => 'Passwordは6文字以上である必要があります',
-            'password.regex' => 'Passwordには小文字、大文字、数字を含める必要があります',
-        ]);
-
         if ($this->loginAdminUseCase->execute($request->email, $request->password)) {
             return redirect()->intended('/admin/dashboard');
         }
