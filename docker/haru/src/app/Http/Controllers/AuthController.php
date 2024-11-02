@@ -7,7 +7,6 @@ use App\DDD\Auth\UseCase\loginAdminUseCase;
 use App\DDD\Auth\UseCase\RegisterAdminUseCase;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller

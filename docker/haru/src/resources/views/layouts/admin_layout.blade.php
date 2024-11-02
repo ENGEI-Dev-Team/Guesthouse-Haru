@@ -12,7 +12,7 @@
 <body>
   <header class="header">
     <div class="logo">
-      <a href="{{ route('user.index') }}}" class="logo-link">
+      <a href="{{ route('user.index') }}" class="logo-link">
         <div class="logo-img">
           <img src="{{ asset('images/logo.webp') }}" alt="Haru.のロゴ">
         </div>

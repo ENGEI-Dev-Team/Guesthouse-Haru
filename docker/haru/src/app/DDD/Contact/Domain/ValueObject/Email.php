@@ -6,6 +6,7 @@ use InvalidArgumentException;
 class Email
 {
   private $email;
+  private const MAX_LENGTH = 255;
 
   public function __construct(string $email)
   {
@@ -23,7 +24,7 @@ class Email
       throw new InvalidArgumentException("Invalid email format.");
     }
 
-    if (strlen($email) > 255) {
+    if (strlen($email) > self::MAX_LENGTH) {
       throw new InvalidArgumentException("Email cannot exceed 255 characters");
     }
   }

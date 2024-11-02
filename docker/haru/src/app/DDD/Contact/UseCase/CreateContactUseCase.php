@@ -16,7 +16,7 @@ class CreateContactUseCase
     $this->contactRepository = $contactRepository;
   }
 
-  public function execute(array $request)
+  public function execute(array $request): void
   {
     $id = (string) \Illuminate\Support\Str::uuid(); 
     $createdAt = new DateTime();

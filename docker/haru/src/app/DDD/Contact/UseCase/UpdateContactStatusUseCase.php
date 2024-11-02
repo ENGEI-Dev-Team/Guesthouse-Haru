@@ -12,7 +12,7 @@ class UpdateContactStatusUseCase
     $this->contactRepository = $contactRepository;
   }
 
-  public function execute(string $id, string $status)
+  public function execute(string $id, string $status): void
   {
     $contact = $this->contactRepository->findById($id);
 

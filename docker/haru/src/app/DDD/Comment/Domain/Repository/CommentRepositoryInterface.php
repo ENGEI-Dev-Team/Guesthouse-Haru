@@ -6,6 +6,6 @@ use App\DDD\Comment\Domain\Entity\Comment;
 interface CommentRepositoryInterface
 {
   public function create(Comment $comment);
-  public function delete($id);
-  public function findById($id);
+  public function delete(string $id): void;
+  public function findById(string $id);
 }

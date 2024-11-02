@@ -12,7 +12,7 @@ class DeleteCommentUseCase
     $this->commentRepository = $commentRepository;
   }
 
-  public function execute($id)
+  public function execute($id): void
   {
     $this->commentRepository->delete($id);
   }

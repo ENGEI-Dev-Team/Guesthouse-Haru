@@ -126,6 +126,20 @@
   color: #fff;
 }
 
+.pagination {
+  text-align: center;
+}
+
+.pagination li{
+  display: inline-block;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+.page-link {
+  font-size: 20px;
+}
+
 /* レスポンシブスタイル */
 @media (max-width: 768px) {
   .blog-item {
@@ -145,5 +159,9 @@
   .filter-button {
     width: 100%; 
     text-align: center;
+  }
+  
+  .pagination li {
+    padding: 5px;
   }
 }

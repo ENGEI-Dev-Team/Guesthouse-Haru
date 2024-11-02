@@ -16,7 +16,7 @@ class CommentRepository implements CommentRepositoryInterface
     ]);
   }
 
-  public function delete($id)
+  public function delete(string $id): void
   {
     $comment = CommentModel::find($id);
     if ($comment) {
@@ -24,7 +24,7 @@ class CommentRepository implements CommentRepositoryInterface
     }
   }
 
-  public function findById($id)
+  public function findById(string $id)
   {
     return CommentModel::find($id);
   }

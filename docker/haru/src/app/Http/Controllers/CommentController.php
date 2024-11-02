@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\DDD\Comment\UseCase\CreateCommentUseCase;
 use App\DDD\Comment\UseCase\DeleteCommentUseCase;
 use App\Http\Requests\StoreCommentRequest;
-use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {

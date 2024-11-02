@@ -9,7 +9,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class BlogRepository implements BlogRepositoryInterface
 {
-  public function save(Blog $blog)
+  public function save(Blog $blog): void
   {
     $blogModel = new BlogModel();
     $blogModel->admin_id = $blog->getAdminId();
@@ -70,7 +70,7 @@ class BlogRepository implements BlogRepositoryInterface
     );
   }
 
-  public function update(Blog $blog)
+  public function update(Blog $blog): void
   {
     $blogModel = BlogModel::find($blog->getId());
 
