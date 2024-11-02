@@ -9,33 +9,32 @@
 
 @section('content')
 <div class="top-image">
-  <img src="{{ asset('images/teshima1.webp') }}" alt="豊島の風景" class="top-image">
-  <div class="top-texts">
-    <h3 class="top-title animated-text">島のお宿 Haru.</h3>
-  </div>
+  <img src="{{ asset('images/top-image.jpg') }}" alt="豊島の風景">
 </div>
 
 <section class="haru">
   <div class="inner">
-    <h1 class="haru-title">Special Experience Stay at Haru.</h1>
+    <div class="section-title">
+      <h2>Special Experience Stay</h2>
+    </div>
     <div class="feature-container">
       <div class="feature">
-        <h2 class="feature-title">1. Traditional Japanese House</h2>
+        <h3 class="feature-title">1. Traditional Japanese House</h3>
         <p class="feature-content">Enjoy a special moment in a historically rich traditional Japanese house that can only be experienced here. Surrounded by the beauty of Japanese aesthetics, a heartwarming experience awaits you.</p>
       </div>
 
       <div class="feature">
-        <h2 class="feature-title">2. One Group Per Day</h2>
+        <h3 class="feature-title">2. One Group Per Day</h3>
         <p class="feature-content">Relax to your heart's content in a luxurious space that is entirely yours, free from any interruptions. Spend pleasant moments in tranquility, feeling refreshed in harmony with nature.</p>
       </div>
 
       <div class="feature">
-        <h2 class="feature-title">3. Convenient Access</h2>
+        <h3 class="feature-title">3. Convenient Access</h3>
         <p class="feature-content">Located just a 3-minute walk from Karato Port. Nearby, you can find various art installations, and the Teshima Art Museum is about a 15-minute walk away.</p>
       </div>
 
       <div class="feature">
-        <h2 class="feature-title">4. Nature-Rich Environment</h2>
+        <h3 class="feature-title">4. Nature-Rich Environment</h3>
         <p class="feature-content">At Haru, surrounded by the sea and mountains, you can leisurely enjoy rural island living. Forget about time and immerse yourself in the island's tranquil lifestyle.</p>
       </div>
     </div>
@@ -55,7 +54,9 @@
       <img src="{{  asset('images/house14.webp') }}" alt="">
       <img src="{{  asset('images/house10.jpg') }}" alt="">
     </div>
-    <a href="{{ route('user.room') }}" class="detail-link">Show all photos ></a>
+    <div class="detail-btn">
+      <a href="{{ route('user.room') }}" class="detail-link">Show all rooms &gt;</a>
+    </div>
   </div>
 
   </div>
@@ -133,7 +134,7 @@
     </div>
     <div class="blog-container">
       @foreach ($latestBlogs as $blog)
-      <a href="{{ route('user.blogLists') }}" class="blog-item">
+      <a href="{{ route('user.blogDetail', ['id' => $blog->id]) }}" class="blog-item">
         @if ($blog->image)
         <div class="blog-image">
           <img src="{{ asset('storage/' . $blog->image) }}" alt="{{ $blog->title }}">
@@ -147,14 +148,14 @@
       </a>
       @endforeach
     </div>
-    <a href="" class="detail-link">Show all blogs ></a>
+    <div class="detail-btn">
+      <a href="{{ route('user.blogLists') }}" class="detail-link">Show all blogs ></a>
+    </div>
   </div>
 </section>
 
 <img src="{{ asset('images/teshima2.jpg') }}" alt="豊島の風景" class="teshima-main-image">
-<div class="teshima">
-
-
+<section class="teshima">
   <div class="inner">
     <div class="section-title">
       <h2>The Setouchi Triennale</h2>
@@ -165,15 +166,17 @@
       <p>On Teshima, the fusion of natural beauty and art transforms the island into a single artwork, offering visitors a unique and unforgettable experience.</p>
       <p>Let's rediscover the charm of Setouchi and envision a hopeful future for the islands.</p>
     </div>
-    <a href="https://setouchi-artfest.jp/en/artworks-artists/artworks/teshima/" class="detail-link">More detail info ></a>
-  </div>
+    <div class="detail-btn">
+      <a href="https://setouchi-artfest.jp/en/artworks-artists/artworks/teshima/" class="detail-link">More detail info ></a>
+    </div>
 
-  <div class="teshima-gallery">
-    <img src="{{ asset('images/teshima3.jpg') }}" alt="豊島の風景">
-    <img src="{{ asset('images/teshima4.jpg') }}" alt="豊島の風景">
-    <img src="{{ asset('images/teshima6.jpg') }}" alt="豊島の風景">
+    <div class="teshima-gallery">
+      <img src="{{ asset('images/teshima3.jpg') }}" alt="豊島の風景">
+      <img src="{{ asset('images/teshima4.jpg') }}" alt="豊島の風景">
+      <img src="{{ asset('images/teshima6.jpg') }}" alt="豊島の風景">
+    </div>
   </div>
-</div>
+</section>
 
 <section class="contact">
   <div class="inner">
@@ -181,15 +184,15 @@
       <h2>Contact</h2>
     </div>
 
-    @if (session('success'))
-    <div class="alert alert-success">
-      {{ session('success') }}
-    </div>
-    @endif
-
     <div class="contact-container">
       <div class="contact-form">
-        <form action="" method="POST">
+        @if (session('contact_success'))
+        <div class="alert alert-success">
+          {{ session('contact_success') }}
+        </div>
+        @endif
+
+        <form action="{{ route('contact.store') }}" method="POST">
           @csrf
           <div class="form-group">
             <label for="name">Name</label>
