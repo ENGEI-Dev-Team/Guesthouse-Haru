@@ -27,4 +27,14 @@ class Blog extends Model
     {
         return $this->belongsToMany(Category::class, 'blog_categories', 'blog_id', 'category_id');
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function getImagePath(): ?string
+    {
+        return $this->image; 
+    }
 }

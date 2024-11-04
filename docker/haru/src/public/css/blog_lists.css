@@ -1,6 +1,6 @@
+
 .blogs-filter {
-  margin-top: 60px;
-  padding: 20px 0;
+  margin-bottom: 50px;
 }
 
 .blogs-filter .inner {
@@ -8,18 +8,11 @@
   margin: 0 auto; 
 }
 
-.section-title {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 20px;
-}
 
 .filter-form {
   display: flex;
   flex-wrap: wrap;
   gap: 15px; 
-  margin-bottom: 20px;
 }
 
 .form-group {
@@ -38,6 +31,7 @@
   background-color: #007BFF;
   color: white;
   padding: 10px 20px;
+  font-size: 1rem; 
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -46,14 +40,6 @@
 
 .filter-button:hover {
   background-color: #0056b3;
-}
-
-
-.blog-lists {
-  padding: 20px 0 50px 0;
-  width: 100%;              
-  max-width: 1200px;       
-  margin: 0 auto;          
 }
 
 .blog-container {
@@ -111,7 +97,8 @@
 .blog-content {
   margin-bottom: 10px;
   line-height: 1.5;        
-  color: #555;             
+  color: #555;    
+  text-align: left;       
 }
 
 .blog-date {
@@ -119,12 +106,62 @@
   margin-bottom: 10px;
 }
 
+.detail-btn {
+  text-align: center;
+}
 .detail-link {
-  color: #007BFF;
-  text-decoration: none;
-  font-weight: bold;
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 20px;
+  color: #0056b3;
+  text-align: center;
+  border: 2px solid #0056b3;
+  background-color: #fff; 
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
 .detail-link:hover {
-  text-decoration: underline;
+  background-color: #004494; 
+  color: #fff;
+}
+
+.pagination {
+  text-align: center;
+}
+
+.pagination li{
+  display: inline-block;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+.page-link {
+  font-size: 20px;
+}
+
+/* レスポンシブスタイル */
+@media (max-width: 768px) {
+  .blog-item {
+    flex: 1 1 100%; 
+    max-width: 100%;
+  }
+
+  .filter-form {
+    flex-direction: column; 
+  }
+
+  .form-group {
+    flex: none; 
+    width: 100%; 
+  }
+
+  .filter-button {
+    width: 100%; 
+    text-align: center;
+  }
+  
+  .pagination li {
+    padding: 5px;
+  }
 }

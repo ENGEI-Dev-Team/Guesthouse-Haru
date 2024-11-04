@@ -1,0 +1,408 @@
+
+/* トップ画像 */
+.top-image {
+  position: relative;
+  margin-top: 60px;
+  width: 100%;
+  text-align: center; 
+}
+
+.top-image img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.top-texts {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+}
+
+.top-title {
+  font-size: 48px;
+  color: white; 
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7); 
+}
+
+.animated-text {
+  opacity: 0; 
+  transform: translateY(20px); 
+  animation: fadeInUp 1s forwards; 
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0; /* 非表示 */
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+.animated-text:nth-child(2) {
+  animation-delay: 0.5s;
+}
+
+.haru {
+  background-color: #f9f9f9;
+}
+
+.feature-container {
+  display: flex; 
+  flex-wrap: wrap; 
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+.haru-title {
+  text-align: center;
+  font-size: 2.5em;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.feature {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  margin: 20px 0;
+  flex: 0 0 calc(50% - 40px); 
+  text-align: left;
+  transition: transform 0.3s, box-shadow 0.3s; 
+}
+
+.feature:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+}
+
+.feature-title {
+  color: #2980b9;
+  margin-top: 0;
+  margin-bottom: 10px; 
+}
+
+.feature-content {
+  line-height: 1.6;
+  margin-top: 0; 
+  margin-bottom: 15px; 
+}
+
+/* 部屋*/
+.room {
+  background-color: #fff;;
+}
+
+/* 写真ギャラリー */
+.room-photos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 50px; 
+}
+
+.room-photos img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.room-photos img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* 1枚目の画像の強調 */
+.room-photos img:nth-child(1) {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+/* サービス内容 */
+.services {
+  background-color: #f9f9f9;
+}
+
+.service-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; 
+}
+
+.service-item {
+  position: relative;
+  border: 1px solid #ddd;
+  background-color: #fff; 
+  border-radius: 8px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  padding: 20px;
+  width: calc(33.333% - 20px); 
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s; 
+}
+
+.service-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+}
+
+.service-modal {
+  display: none;
+  margin-top: 15px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+}
+
+.icon {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 10px; 
+  background-color: #007bff; 
+  border-radius: 50%; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 25px;
+}
+
+.service-title {
+  font-size: 18px;
+  margin: 10px 0;
+  font-weight: bold;
+  color: #333;
+}
+
+.service-content {
+  font-size: 16px;
+  color: #666;
+  text-align: left;
+}
+
+/* サービスアイテム */
+.service-item {
+  margin-bottom: 20px;
+}
+
+.service-item .icon {
+  font-size: 25px;
+  margin-bottom: 10px;
+}
+
+
+/* 豊島 */
+.teshima {
+  background-color: #fff;
+}
+
+.teshima-title {
+  margin-bottom: 20px;
+}
+
+.teshima-text {
+  font-size: 2rem;
+  color: #0056b3;
+}
+
+.teshima-contents {
+  text-align: justify;
+}
+
+.teshima-contents p {
+  color: #333;
+  margin: 20px 0; 
+}
+
+.detail-link {
+  display: inline-block;
+  padding: 10px;
+  margin-top: 20px;
+  color: #0056b3;
+  border: 2px solid #0056b3;
+  background-color: #fff; 
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.detail-link:hover {
+  background-color: #004494; 
+  color: #fff;
+}
+
+.teshima-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px; 
+  margin-top: 40px;
+}
+
+.teshima-gallery img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.teshima-gallery img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* お問い合わせ */
+.contact {
+  background-color: #f9f9f9;
+}
+
+.contact-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.contact-form {
+  width: 100%; 
+  padding: 30px;
+  background-color: #fff; 
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
+  border-radius: 8px; 
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%; 
+  margin-bottom: 15px; 
+}
+
+label {
+  margin-bottom: 5px; 
+  color: #333; 
+  text-align: left;
+}
+
+.input-form, .textarea-form {
+  width: 100%; 
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.textarea-form {
+  height: 80px; 
+  resize: vertical;
+}
+
+.submit-button {
+  background-color: #fff; 
+  color: #0056b3;
+  border: 2px solid #0056b3;
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px; 
+  transition: background-color 0.3s ease, color 0.3s ease; 
+}
+
+.submit-button:hover {
+  background-color: #004494; 
+  color: #fff;
+}
+
+.error {
+  background-color: #ffebee;
+  border: 1px solid #f44336;
+  color: #f44336;
+  padding: 0.5rem;
+  margin-top: 1rem;
+  border-radius: 4px;
+  text-align: left;
+}
+
+.alert-success {
+  color: green;
+  background-color: #d4edda;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  text-align: left;
+}
+
+.fade-in-text {
+  opacity: 0;
+  transition: opacity 1s ease-out;
+}
+
+.fade-in-text.visible {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .top-image h3 {
+    font-size: 16px;
+  }
+
+  .feature-container {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+  }
+
+  .feature {
+    width: 100%; 
+    margin: 10px 0; 
+    padding: 15px;
+  }
+
+  .room-photos {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
+    margin-top: 20px; 
+  }
+
+  .room-photos img {
+    width: 100%;
+    border-radius: 10px; 
+  }
+
+  .service-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .service-item {
+    width: 100%; 
+  }
+
+  .blog-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .teshima-gallery {
+    display: flex; 
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .teshima-gallery img {
+    width: 100%; 
+    border-radius: 8px;
+  }
+}
