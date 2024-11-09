@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DDD\Contact\infrastructure;
+namespace App\DDD\Contact\Infrastructure;
 
 use App\DDD\Contact\Domain\Entities\Contact as ContactEntity;
 use App\DDD\Contact\Domain\Repositories\ContactRepositoryInterface;

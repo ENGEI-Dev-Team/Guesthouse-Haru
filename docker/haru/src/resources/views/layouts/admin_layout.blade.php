@@ -14,7 +14,7 @@
     <div class="logo">
       <a href="{{ route('user.index') }}" class="logo-link">
         <div class="logo-img">
-          <img src="{{ asset('images/logo.webp') }}" alt="Haru.のロゴ">
+          <img src="{{ asset('images/haru_logo.JPG') }}" alt="Haru.のロゴ">
         </div>
         <h1 class="header-title">島のお宿 Haru.</h1>
       </a>

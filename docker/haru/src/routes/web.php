@@ -24,11 +24,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 // 管理者用ルート
-
-// 管理者登録
-Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('admin.register');
-Route::post('/register', [AuthController::class, 'register'])->name('admin.register.submit');
-
 // 管理者ログイン
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/login', [AuthController::class, 'login'])->name('admin.login.submit');

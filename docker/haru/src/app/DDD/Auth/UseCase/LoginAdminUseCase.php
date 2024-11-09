@@ -6,7 +6,7 @@ use App\DDD\Auth\Domain\ValueObject\Password;
 use Illuminate\Support\Facades\Auth;
 
 
-class loginAdminUseCase
+class LoginAdminUseCase
 {
   public function execute($email, $password):bool
   {

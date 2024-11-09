@@ -35,8 +35,6 @@
       </div>
       <button type="submit" class="btn">ログイン</button>
     </form>
-
-    <p class="auth-p">アカウントをお持ちでないですか？<a href="{{ route('admin.register') }}" class="register-link">新規登録</a></p>
   </div>
 </body>
 </html>

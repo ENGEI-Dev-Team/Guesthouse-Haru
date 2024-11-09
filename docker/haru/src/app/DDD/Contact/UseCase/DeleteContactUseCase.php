@@ -3,7 +3,7 @@ namespace App\DDD\Contact\UseCase;
 
 use App\DDD\Contact\Domain\Repositories\ContactRepositoryInterface;
 
-class deleteContactUseCase
+class DeleteContactUseCase
 {
   private $contactRepository;
 
