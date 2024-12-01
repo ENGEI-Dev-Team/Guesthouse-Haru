@@ -12,7 +12,12 @@ class EloquentContactRepository implements ContactRepositoryInterface
 {
   public function save(ContactEntity $contact): void
   {
-    $contactModel = new Contact();
+    $contactModel = Contact::find($contact->getId());
+
+    if (!$contactModel) {
+      $contactModel = new Contact();
+      $contactModel->id = $contact->getId(); 
+    }
 
     $contactModel->name = $contact->getName();
     $contactModel->email = $contact->getEmail()->getValue();;

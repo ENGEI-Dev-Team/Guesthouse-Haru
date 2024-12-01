@@ -14,7 +14,7 @@
     <div class="alert alert-success">
       {{ session('success') }}
     </div>
-    <div class="alert alert-error">
+    <div class="alert-error">
       {{ session('error') }}
     </div>
     @endif
