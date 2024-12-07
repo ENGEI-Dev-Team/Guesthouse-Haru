@@ -11,7 +11,6 @@ class Blog extends Model
     use HasFactory;
 
     protected $fillable = ['admin_id', 'title', 'content', 'image'];
-
     protected $keyType = 'string';
     public $incrementing = false; 
 
@@ -21,6 +20,11 @@ class Blog extends Model
         self::creating(function ($model) {
             $model->id = (string) Str::uuid();
         });
+    }
+
+    public function admin()
+    {
+        return $this->belongsTo(Admin::class, 'admin_id');
     }
 
     public function categories()
