@@ -176,14 +176,13 @@ https://www.figma.com/design/iyQvmGN80CWSojgsXBfoJF/%E7%94%BB%E9%9D%A2%E9%81%B7%
 <img src="https://d20r2glx6euv0l.cloudfront.net/editor/1ef83628caac7221.jpg">
 <img src="https://d20r2glx6euv0l.cloudfront.net/editor/e1523f1922c38c96.jpg">
 <br>
-<img src="https://d20r2glx6euv0l.cloudfront.net/editor/38a9850b4e7eaeb3.jpg">
+<img src="https://github.com/user-attachments/assets/2d8dc137-1f57-4d89-90b3-dfba80fc508f">
 
----
 
 ## ユースケースモデリング
 
 https://www.notion.so/2efa725f9a7b495b82a38e44848aa2ee?pvs=4
----
+
 
 ---
 
