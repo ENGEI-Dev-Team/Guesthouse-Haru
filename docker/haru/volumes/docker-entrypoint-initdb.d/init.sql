@@ -1,0 +1,11 @@
+-- init.sql
+CREATE DATABASE IF NOT EXISTS guesthouse_haru;
+
+USE guesthouse_haru;
+
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL
+);
+
