@@ -14,7 +14,7 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        $adminId = 'aa47ecd7-c483-4233-bf71-7e5caf77d69b';
+        $adminId = '5b4fdce2-7be8-469a-8d0e-dc3028ef8bcc';
 
         // カテゴリーの挿入
         DB::table('categories')->insert([
