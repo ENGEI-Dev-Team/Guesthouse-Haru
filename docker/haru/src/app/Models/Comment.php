@@ -11,7 +11,6 @@ class Comment extends Model
     use HasFactory;
 
     protected $fillable = ['blog_id', 'author', 'content'];
-
     protected $keyType = 'string';
     public $incrementing = false; 
 

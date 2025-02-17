@@ -14,7 +14,6 @@ class Admin extends Model implements Authenticatable
     use HasFactory, UserAuthenticatable;
 
     protected $fillable = ['name', 'email', 'password'];
-
     protected $keyType = 'string'; 
     public $incrementing = false;
 
@@ -30,5 +29,15 @@ class Admin extends Model implements Authenticatable
     // パスワードのハッシュ化
     public function setPasswordAttribute($value) {
         $this->attributes['password'] = Hash::make($value);
+    }
+
+    public function blogs()
+    {
+        return $this->hasMany(Blog::class, 'admin_id');
+    }
+
+    public function categories()
+    {
+        return $this->hasMany(Category::class, 'admin_id');
     }
 }
