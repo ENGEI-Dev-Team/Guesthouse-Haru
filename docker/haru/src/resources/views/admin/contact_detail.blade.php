@@ -37,7 +37,7 @@
       <tr>
         <th>ステータス</th>
         <td>
-          <span style="color: {{ $contact->getStatus() == 'unresolved' ? 'red' : ($contact->getStatus() == 'in_progress' ? 'green' : 'blue') }}">
+          <span class="{{ $contact->getStatus() }}">
             {{ $contact->getStatus() == 'unresolved' ? '未対応' : ($contact->getStatus() == 'in_progress' ? '対応中' : '完了') }}
           </span>
         </td>
