@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y \
     curl \
     libzip-dev \
     unzip \
-    && docker-php-ext-install zip pdo pdo_mysql
+    && docker-php-ext-install zip pdo pdo_mysql mbstring
 
 # Composerのインストール
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
@@ -26,8 +26,8 @@ RUN php artisan config:clear && \
     php artisan route:cache && \
     php artisan view:cache
 
-# パーミッションの設定
-RUN chmod -R 775 storage bootstrap/cache
+# # パーミッションの設定
+# RUN chmod -R 775 storage bootstrap/cache
 
 # 環境変数の設定
 ENV APP_ENV=production
