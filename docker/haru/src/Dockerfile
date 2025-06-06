@@ -1,20 +1,34 @@
-FROM richarvey/nginx-php-fpm:1.7.2
+FROM php:8.1-fpm
 
+# 必要な拡張モジュールのインストール
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libzip-dev \
+    unzip \
+    && docker-php-ext-install zip pdo pdo_mysql
+
+# Composer のインストール
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# 作業ディレクトリの設定
+WORKDIR /var/www/html
+
+# アプリケーションの依存関係をインストール
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --optimize-autoloader
+
+# アプリケーションコードのコピー
 COPY . .
 
-# Image config
-ENV SKIP_COMPOSER 1
-ENV WEBROOT /var/www/html/public
-ENV PHP_ERRORS_STDERR 1
-ENV RUN_SCRIPTS 1
-ENV REAL_IP_HEADER 1
+# パーミッションの設定
+RUN chmod -R 775 storage bootstrap/cache
 
-# Laravel config
-ENV APP_ENV production
-ENV APP_DEBUG false
-ENV LOG_CHANNEL stderr
+# Laravel のキャッシュクリアと再生成
+RUN php artisan config:clear && \
+    php artisan config:cache && \
+    php artisan route:cache && \
+    php artisan view:cache
 
-# Allow composer to run as root
-ENV COMPOSER_ALLOW_SUPERUSER 1
-
-CMD ["/start.sh"]
+# 起動コマンド
+CMD ["php-fpm"]
