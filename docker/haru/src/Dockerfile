@@ -21,10 +21,10 @@ COPY . .
 RUN composer install --no-dev --optimize-autoloader
 
 # Laravelのキャッシュクリアと再生成
-# RUN php artisan config:clear && \
-#     php artisan config:cache && \
-#     php artisan route:cache && \
-#     php artisan view:cache
+RUN php artisan config:clear && \
+    php artisan config:cache && \
+    php artisan route:cache && \
+    php artisan view:cache
 
 # パーミッションの設定
 RUN chmod -R 775 storage bootstrap/cache
