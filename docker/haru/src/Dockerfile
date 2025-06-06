@@ -1,4 +1,4 @@
-FROM php:8.1-fpm
+FROM php:8.2-fpm
 
 # 必要なPHP拡張モジュールのインストール
 RUN apt-get update && apt-get install -y \
@@ -28,7 +28,8 @@ RUN php artisan config:clear && \
     php artisan view:cache
 
 # # パーミッションの設定
-# RUN chmod -R 775 storage bootstrap/cache
+RUN chown -R www-data:www-data storage bootstrap/cache
+RUN chmod -R 775 storage bootstrap/cache
 
 # 環境変数の設定
 ENV APP_ENV=production
